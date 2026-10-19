@@ -1,0 +1,334 @@
+/* usdz-export: AR button busy state, toast, device sheets, QR link (prototype bar switch at the end). */
+
+.wc3d-ar-btn.wc3d-arx-busy {
+	cursor: progress;
+	opacity: 0.92;
+}
+
+.wc3d-arx-spinner {
+	width: 14px;
+	height: 14px;
+	flex: 0 0 14px;
+	border: 2px solid rgba(255, 255, 255, 0.35);
+	border-top-color: currentColor;
+	border-radius: 50%;
+	animation: wc3d-arx-spin 0.8s linear infinite;
+}
+
+@keyframes wc3d-arx-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.wc3d-arx-toast {
+	position: absolute;
+	left: 12px;
+	right: 12px;
+	top: 12px;
+	z-index: 5;
+	margin: 0 auto;
+	max-width: 360px;
+	padding: 10px 12px;
+	border-radius: 8px;
+	background: rgba(15, 23, 42, 0.88);
+	color: #fff;
+	font-size: 13px;
+	line-height: 1.4;
+	text-align: center;
+	box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+}
+
+/* Sheets reuse the AR modal shell; wider and left-aligned. */
+.wc3d-ar-modal__panel.wc3d-arx-sheet {
+	width: 420px;
+	max-width: calc(100vw - 32px);
+	max-height: calc(100vh - 32px);
+	overflow-y: auto;
+	text-align: left;
+	background: rgba(255, 255, 255, 0.96);
+}
+
+.wc3d-arx .wc3d-ar-modal__panel h4 {
+	margin: 6px 0 10px;
+}
+
+.wc3d-ar-modal__panel .wc3d-arx-proto {
+	flex-wrap: wrap;
+	margin: 0 26px 10px 0;
+	font-size: 12px;
+	text-align: left;
+}
+
+.wc3d-ar-modal__panel.wc3d-arx-qr .wc3d-arx-proto {
+	margin: 4px 0 0;
+}
+
+.wc3d-arx-preview {
+	position: relative;
+	height: 200px;
+	border-radius: 10px;
+	overflow: hidden;
+	background: radial-gradient(circle at 50% 35%, #ffffff 0%, #eef1f5 70%);
+	border: 1px solid #e2e8f0;
+}
+
+.wc3d-arx-preview canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	cursor: grab;
+	touch-action: none;
+}
+
+.wc3d-arx-preview--still img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.wc3d-arx-preview__cap {
+	position: absolute;
+	left: 8px;
+	bottom: 6px;
+	padding: 2px 6px;
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.85);
+	color: #475569;
+	font-size: 11px;
+	pointer-events: none;
+}
+
+.wc3d-arx-rows {
+	margin: 12px 0 0;
+	font-size: 13px;
+}
+
+.wc3d-arx-rows > div {
+	display: grid;
+	grid-template-columns: 92px minmax(0, 1fr);
+	gap: 8px;
+	padding: 6px 0;
+	border-bottom: 1px solid #eef2f6;
+}
+
+.wc3d-arx-rows > div:last-child {
+	border-bottom: 0;
+}
+
+.wc3d-arx-rows dt {
+	color: #64748b;
+	margin: 0;
+}
+
+.wc3d-arx-rows dd {
+	margin: 0;
+	color: #0f172a;
+	overflow-wrap: anywhere;
+}
+
+.wc3d-arx-mono {
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	font-size: 12px;
+}
+
+.wc3d-arx-muted {
+	color: #64748b;
+}
+
+.wc3d-arx-design {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+}
+
+.wc3d-arx-design li {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin: 0 0 2px;
+}
+
+.wc3d-arx-design__label {
+	color: #475569;
+}
+
+.wc3d-arx-dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.18);
+	flex: 0 0 10px;
+}
+
+.wc3d-ar-modal__panel .wc3d-arx-error,
+.wc3d-ar-modal__panel .wc3d-arx-warn {
+	margin: 12px 0 0;
+	padding: 8px 10px;
+	border-radius: 6px;
+	font-size: 12.5px;
+	line-height: 1.45;
+	background: #fef3c7;
+	color: #78350f;
+}
+
+.wc3d-ar-modal__panel .wc3d-arx-error {
+	background: #fee2e2;
+	color: #7f1d1d;
+}
+
+.wc3d-arx-intent {
+	margin-top: 10px;
+	font-size: 12px;
+}
+
+.wc3d-arx-intent summary {
+	cursor: pointer;
+	color: #334155;
+}
+
+.wc3d-arx-intent code {
+	display: block;
+	margin-top: 6px;
+	padding: 8px;
+	border-radius: 6px;
+	background: #f1f5f9;
+	color: #334155;
+	font-size: 11px;
+	overflow-wrap: anywhere;
+	white-space: normal;
+}
+
+.wc3d-ar-modal__panel .wc3d-arx-note {
+	margin: 14px 0 0;
+	padding-top: 12px;
+	border-top: 1px solid #eef2f6;
+	color: #475569;
+	font-size: 12.5px;
+	line-height: 1.5;
+}
+
+.wc3d-arx-done {
+	display: block;
+	width: 100%;
+	margin-top: 14px;
+	padding: 10px 14px;
+	border: 0;
+	border-radius: 8px;
+	background: #0f172a;
+	color: #fff;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.wc3d-arx-done:hover {
+	background: #1e293b;
+}
+
+/* QR modal additions */
+.wc3d-ar-modal__panel.wc3d-arx-qr {
+	width: 360px;
+	max-width: calc(100vw - 32px);
+	max-height: calc(100vh - 32px);
+	overflow-y: auto;
+}
+
+.wc3d-arx-link {
+	margin: 4px 0 10px;
+	text-align: left;
+	font-size: 12.5px;
+}
+
+.wc3d-ar-modal__panel .wc3d-arx-link__lead {
+	margin: 0 0 4px !important;
+	font-weight: 600;
+	color: #0f172a;
+}
+
+.wc3d-arx-link__row {
+	display: flex;
+	gap: 6px;
+	margin-top: 8px;
+}
+
+.wc3d-arx-link__url {
+	flex: 1;
+	min-width: 0;
+	padding: 6px 8px;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	background: #fff;
+	color: #334155;
+	font: 11px ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.wc3d-arx-link__copy,
+.wc3d-arx-openas button {
+	flex: 0 0 auto;
+	padding: 6px 10px;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	background: #fff;
+	color: #0f172a;
+	font: inherit;
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.wc3d-arx-link__copy:hover,
+.wc3d-arx-openas button:hover {
+	border-color: #94a3b8;
+}
+
+.wc3d-arx .proto-cart-hint {
+	text-align: left;
+}
+
+.wc3d-arx-openas {
+	display: flex;
+	flex: 1 0 100%;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+@media (max-width: 600px) {
+	/* Bottom sheet on phones. */
+	.wc3d-arx {
+		align-items: flex-end;
+	}
+
+	.wc3d-ar-modal__panel.wc3d-arx-sheet {
+		width: 100%;
+		max-width: 100%;
+		max-height: 88vh;
+		border-radius: 14px 14px 0 0;
+		padding: 18px 16px 20px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wc3d-arx-spinner {
+		animation-duration: 2.4s;
+	}
+}
+
+/* Prototype bar: AR device switch */
+.proto-ar-device__fail {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 0 8px;
+	border-left: 1px solid var(--proto-bar-line);
+	color: var(--proto-bar-fg);
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.proto-ar-device__fail input {
+	margin: 0;
+}

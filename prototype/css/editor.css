@@ -1,0 +1,1370 @@
+/*
+ * Editor component classes: src/admin/editor/editor.css translated to plain CSS.
+ * The source has no @apply; its @layer base/components blocks are unwrapped here in
+ * the same order, so Tailwind utilities (scoped to .wc3d-app, injected later) still win.
+ */
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * body.wc3d-screen → prototype: the editor fills the stage under the 32px
+ * admin bar (46px at ≤782px, none at ≤600px) and covers the admin menu.
+ * WpAdmin({ fullscreen: true }) renders .wp-admin-frame.is-fullscreen; the
+ * route sets .proto-root--full so the page itself never scrolls.
+ * ────────────────────────────────────────────────────────────────────── */
+/* #proto-app only has min-height, so give the full-screen root a definite height. */
+#proto-app:has(> .proto-root--full) {
+	height: 100%;
+}
+
+.proto-root--full .wp-admin-frame.is-fullscreen {
+	height: 100%;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.wp-admin-frame.is-fullscreen .wpa-main {
+	flex: 1 1 0;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.wp-admin-frame.is-fullscreen .wpa-menu {
+	display: none;
+}
+
+.wp-admin-frame.is-fullscreen .wpa-content,
+.wp-admin-frame.is-fullscreen .wpa-body,
+.wp-admin-frame.is-fullscreen .wpa-body-content,
+.wp-admin-frame.is-fullscreen .wc3d-editor-wrap {
+	flex: 1;
+	min-height: 0;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.wp-admin-frame.is-fullscreen .wc3d-editor-wrap > .notice {
+	margin: 12px 16px;
+}
+
+.wp-admin-frame.is-fullscreen #wc3d-editor-root,
+.wp-admin-frame.is-fullscreen .wc3d-editor-root {
+	flex: 1;
+	min-height: 0;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.wp-admin-frame.is-fullscreen .wc3d-app {
+	height: 100%;
+	min-height: 0;
+}
+
+.wp-admin-frame.is-fullscreen #wc3d-editor-root > .wc3d-app,
+.wp-admin-frame.is-fullscreen .wc3d-editor-root > .wc3d-app {
+	flex: 1;
+}
+
+@media screen and (max-width: 600px) {
+
+	.wp-admin-frame.is-fullscreen .wpa-bar {
+		display: none;
+	}
+}
+
+/* Preflight is off: give borders a style, under components/utilities. */
+.wc3d-app :where(*, ::before, ::after) {
+	border-width: 0;
+	border-style: solid;
+	border-color: var(--wc3d-ui-border);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * Root — tokens come from ../shared/ui.css (.wc3d-app, .wc3d-app.dark).
+ * Native form widgets (color, range) need raw CSS.
+ * ────────────────────────────────────────────────────────────────────── */
+/* stylelint-disable-next-line no-descending-specificity -- no shared props */
+.wc3d-app {
+	color-scheme: light;
+	font-family: var(--wc3d-ui-font);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.wc3d-app.dark {
+	color-scheme: dark;
+}
+
+.wc3d-app :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+	outline: 2px solid var(--wc3d-ui-primary);
+	outline-offset: 1px;
+	box-shadow: none;
+}
+
+/* Native color input — remove default border/padding inside our swatch. */
+.wc3d-app input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+.wc3d-app input[type="color"]::-webkit-color-swatch {
+	border: none;
+}
+
+/* Range input; an inline --wc3d-pct (SliderRow) paints the fill. */
+.wc3d-app input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 5px;
+	border-radius: 9999px;
+	background: linear-gradient(to right, var(--wc3d-ui-slider) var(--wc3d-pct, 0%), var(--wc3d-ui-track) var(--wc3d-pct, 0%));
+	outline: none;
+	cursor: pointer;
+}
+
+.wc3d-app input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 16px;
+	height: 16px;
+	border-radius: 9999px;
+	background: var(--wc3d-ui-slider);
+	border: 2px solid var(--wc3d-ui-card);
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.25);
+	cursor: pointer;
+	transition: transform 0.1s;
+}
+
+.wc3d-app input[type="range"]::-webkit-slider-thumb:hover {
+	transform: scale(1.12);
+}
+
+/* RTL ranges run right to left, so the fill must too. */
+[dir="rtl"] .wc3d-app input[type="range"] {
+	background: linear-gradient(to left, var(--wc3d-ui-slider) var(--wc3d-pct, 0%), var(--wc3d-ui-track) var(--wc3d-pct, 0%));
+}
+
+.wc3d-app input[type="range"]::-moz-range-thumb {
+	width: 16px;
+	height: 16px;
+	border-radius: 9999px;
+	background: var(--wc3d-ui-slider);
+	border: 2px solid var(--wc3d-ui-card);
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.25);
+	cursor: pointer;
+}
+
+.wc3d-app input[type="range"]:focus-visible::-webkit-slider-thumb {
+	box-shadow: 0 0 0 2px var(--wc3d-ui-card), 0 0 0 4px var(--wc3d-ui-primary);
+}
+
+.wc3d-app input[type="range"]:focus-visible::-moz-range-thumb {
+	box-shadow: 0 0 0 2px var(--wc3d-ui-card), 0 0 0 4px var(--wc3d-ui-primary);
+}
+
+/* Custom scrollbar inside our scrolling panels. */
+.wc3d-scroll::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.wc3d-scroll::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.wc3d-scroll::-webkit-scrollbar-thumb {
+	background: rgba(15, 23, 42, 0.1);
+	border-radius: 4px;
+}
+
+.wc3d-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(15, 23, 42, 0.2);
+}
+
+.wc3d-app.dark .wc3d-scroll::-webkit-scrollbar-thumb {
+	background: rgba(241, 245, 249, 0.1);
+}
+
+.wc3d-app.dark .wc3d-scroll::-webkit-scrollbar-thumb:hover {
+	background: rgba(241, 245, 249, 0.2);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * Top bar — sized by its own width (admin menu expanded/folded), not the
+ * viewport. Collapsed labels stay in the a11y tree so names don't change.
+ * ────────────────────────────────────────────────────────────────────── */
+.wc3d-topbar {
+	container: wc3d-topbar / inline-size;
+}
+
+.wc3d-topbar-inner {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	height: 58px;
+	padding: 0 24px;
+	box-sizing: border-box;
+}
+
+.wc3d-topbar-inner > * {
+	flex-shrink: 0;
+}
+
+.wc3d-topbar-inner > .wc3d-topbar-crumbs {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+/* The editor view carries more controls, so it collapses earlier. */
+@container wc3d-topbar (max-width: 1479px) {
+
+	:where(.wc3d-app) .wc3d-topbar-inner.is-editor .wc3d-tb-collapse-lg > .wc3d-tb-label,
+	:where(.wc3d-app) .wc3d-topbar-inner.is-editor .wc3d-tb-collapse-md > .wc3d-tb-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	:where(.wc3d-app) .wc3d-topbar-inner.is-editor .wc3d-btn.wc3d-tb-collapse-lg,
+	:where(.wc3d-app) .wc3d-topbar-inner.is-editor .wc3d-btn.wc3d-tb-collapse-md {
+		padding-left: 9px;
+		padding-right: 9px;
+	}
+}
+
+@container wc3d-topbar (max-width: 1239px) {
+
+	:where(.wc3d-app) .wc3d-tb-collapse-lg > .wc3d-tb-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	:where(.wc3d-app) .wc3d-btn.wc3d-tb-collapse-lg {
+		padding-left: 9px;
+		padding-right: 9px;
+	}
+
+	:where(.wc3d-app) .wc3d-tb-hide-xl {
+		display: none;
+	}
+}
+
+@container wc3d-topbar (max-width: 1039px) {
+
+	:where(.wc3d-app) .wc3d-topbar-inner {
+		gap: 8px;
+		padding: 0 16px;
+	}
+
+	:where(.wc3d-app) .wc3d-tb-collapse-md > .wc3d-tb-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	:where(.wc3d-app) .wc3d-btn.wc3d-tb-collapse-md {
+		padding-left: 9px;
+		padding-right: 9px;
+	}
+
+	:where(.wc3d-app) .wc3d-tb-hide-md {
+		display: none;
+	}
+}
+
+@container wc3d-topbar (max-width: 899px) {
+
+	:where(.wc3d-app) .wc3d-topbar-inner.is-editor .wc3d-tb-collapse-sm > .wc3d-tb-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	:where(.wc3d-app) .wc3d-topbar-inner.is-editor .wc3d-btn.wc3d-tb-collapse-sm {
+		padding-left: 9px;
+		padding-right: 9px;
+	}
+}
+
+@container wc3d-topbar (max-width: 759px) {
+
+	:where(.wc3d-app) .wc3d-tb-collapse-sm > .wc3d-tb-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	:where(.wc3d-app) .wc3d-btn.wc3d-tb-collapse-sm {
+		padding-left: 9px;
+		padding-right: 9px;
+	}
+}
+
+/* Saving-status dot pulse. */
+@keyframes wc3d-pulse {
+
+	0%,
+	100% {
+		opacity: 0.35;
+	}
+
+	50% {
+		opacity: 1;
+	}
+}
+
+.wc3d-pulse {
+	animation: wc3d-pulse 1.2s ease-in-out infinite;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * Component classes — the new admin UI's controls, driven by --wc3d-ui-*
+ * tokens so .dark only has to swap variables. Exported as class strings
+ * from components/ui/classes.ts.
+ * ────────────────────────────────────────────────────────────────────── */
+/* stylelint-disable no-descending-specificity, max-line-length -- modifiers follow their bases; data URIs. */
+/* Button base; height via -sm / default / -lg. */
+.wc3d-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	height: 34px;
+	min-height: 0;
+	padding: 0 14px;
+	margin: 0;
+	box-sizing: border-box;
+	border: 1px solid transparent;
+	border-radius: var(--wc3d-ui-radius-control);
+	background: transparent;
+	color: var(--wc3d-ui-title);
+	font-family: inherit;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1;
+	white-space: nowrap;
+	text-decoration: none;
+	cursor: pointer;
+	box-shadow: none;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.wc3d-btn:disabled,
+.wc3d-btn[aria-disabled="true"] {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.wc3d-btn-sm {
+	height: 28px;
+	padding: 0 10px;
+	gap: 5px;
+	font-size: 12px;
+	border-radius: var(--wc3d-ui-radius-inner);
+}
+
+.wc3d-btn-lg {
+	height: 40px;
+	padding: 0 18px;
+	font-size: 14px;
+}
+
+.wc3d-btn-primary {
+	background: var(--wc3d-ui-primary-fill);
+	color: #fff;
+}
+
+.wc3d-btn-primary:hover:not(:disabled) {
+	background: color-mix(in srgb, var(--wc3d-ui-primary-fill), #000 12%);
+	color: #fff;
+}
+
+.wc3d-btn-save {
+	background: var(--wc3d-ui-save);
+	color: #fff;
+}
+
+.wc3d-btn-save:hover:not(:disabled) {
+	background: var(--wc3d-ui-save-hover);
+	color: #fff;
+}
+
+/* Outline button (the design's "ghost": Reset to Default, Save Draft). */
+.wc3d-btn-ghost {
+	background: var(--wc3d-ui-card);
+	border-color: var(--wc3d-ui-border);
+	color: var(--wc3d-ui-title);
+}
+
+.wc3d-btn-ghost:hover:not(:disabled) {
+	background: var(--wc3d-ui-bg);
+	border-color: var(--wc3d-ui-border-strong);
+	color: var(--wc3d-ui-title);
+}
+
+/* Outline with brand text, for a secondary call to action. */
+.wc3d-btn-secondary {
+	background: var(--wc3d-ui-card);
+	border-color: var(--wc3d-ui-border);
+	color: var(--wc3d-ui-primary);
+}
+
+.wc3d-btn-secondary:hover:not(:disabled) {
+	background: var(--wc3d-ui-strip);
+	border-color: var(--wc3d-ui-primary);
+	color: var(--wc3d-ui-primary);
+}
+
+/* Tinted brand button (Upload, Cloud Storage, Select All). */
+.wc3d-btn-soft {
+	background: var(--wc3d-ui-info-bg);
+	color: var(--wc3d-ui-primary);
+}
+
+.wc3d-btn-soft:hover:not(:disabled) {
+	background: var(--wc3d-ui-soft-hover);
+	color: var(--wc3d-ui-primary);
+}
+
+/* Tinted red button (Reset All). */
+.wc3d-btn-danger {
+	background: var(--wc3d-ui-danger-bg);
+	color: var(--wc3d-ui-danger-fg);
+}
+
+.wc3d-btn-danger:hover:not(:disabled) {
+	background: color-mix(in srgb, var(--wc3d-ui-danger-bg), var(--wc3d-ui-danger-fg) 12%);
+	color: var(--wc3d-ui-danger-fg);
+}
+
+/* Muted grey button (Deselect All). */
+.wc3d-btn-muted {
+	background: var(--wc3d-ui-field);
+	color: var(--wc3d-ui-text-2);
+}
+
+.wc3d-btn-muted:hover:not(:disabled) {
+	background: var(--wc3d-ui-border);
+	color: var(--wc3d-ui-title);
+}
+
+/* Square icon-only button; pair with .wc3d-btn-ghost etc. */
+.wc3d-btn-icon {
+	width: 34px;
+	padding: 0;
+}
+
+.wc3d-btn-sm.wc3d-btn-icon {
+	width: 28px;
+}
+
+/* Chrome-less text action. */
+.wc3d-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: none;
+	color: var(--wc3d-ui-primary);
+	font-family: inherit;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+	border-radius: 4px;
+	box-shadow: none;
+}
+
+.wc3d-link:hover:not(:disabled) {
+	color: var(--wc3d-ui-primary-hover);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.wc3d-link-danger {
+	color: var(--wc3d-ui-danger-fg);
+}
+
+.wc3d-link-danger:hover:not(:disabled) {
+	color: var(--wc3d-ui-danger-fg);
+}
+
+.wc3d-link-muted {
+	color: var(--wc3d-ui-desc);
+	font-weight: 500;
+}
+
+.wc3d-link-muted:hover:not(:disabled) {
+	color: var(--wc3d-ui-primary);
+}
+
+.wc3d-link:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* Card surface (overview summary, variation tiles). */
+.wc3d-card {
+	background: var(--wc3d-ui-card);
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius);
+}
+
+/* Inset sub-surface inside a panel (readouts, chips, forms). */
+.wc3d-surface {
+	background: var(--wc3d-ui-tile);
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+}
+
+/* Icon tile: the new UI's row icon (40px there, 28px in the dense editor). */
+.wc3d-icon-tile {
+	display: inline-grid;
+	place-items: center;
+	flex: none;
+	width: 28px;
+	height: 28px;
+	border-radius: var(--wc3d-ui-radius-control);
+	background: var(--wc3d-ui-tile);
+	color: var(--wc3d-ui-title);
+}
+
+.wc3d-icon-tile-brand {
+	background: var(--wc3d-ui-info-bg);
+	color: var(--wc3d-ui-primary);
+}
+
+/* Section label over a group of controls. */
+.wc3d-eyebrow {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--wc3d-ui-title);
+}
+
+/* Field caption above an input. */
+.wc3d-label {
+	display: block;
+	margin: 0 0 6px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: var(--wc3d-ui-title);
+}
+
+/* Description / help copy. */
+.wc3d-help {
+	margin: 0;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--wc3d-ui-desc);
+}
+
+/* Text input, select and textarea; the element qualifier outranks wp-admin's input[type]/select rules. */
+:where(.wc3d-app) :is(input, select, textarea).wc3d-input,
+:where(.wc3d-app) :is(input, select, textarea).wc3d-select,
+:where(.wc3d-app) :is(input, select, textarea).wc3d-textarea {
+	display: block;
+	width: 100%;
+	min-height: 0;
+	max-width: none;
+	margin: 0;
+	box-sizing: border-box;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+	background-color: var(--wc3d-ui-card);
+	color: var(--wc3d-ui-title);
+	font-family: inherit;
+	font-size: 13px;
+	line-height: normal;
+	box-shadow: none;
+	transition: border-color 0.15s ease;
+}
+
+:where(.wc3d-app) :is(input, select, textarea).wc3d-input,
+:where(.wc3d-app) :is(input, select, textarea).wc3d-select {
+	height: 34px;
+	padding: 0 10px;
+}
+
+:where(.wc3d-app) :is(input, select, textarea).wc3d-textarea {
+	padding: 8px 10px;
+	line-height: 1.45;
+	resize: vertical;
+}
+
+:where(.wc3d-app) .wc3d-input::placeholder,
+:where(.wc3d-app) .wc3d-textarea::placeholder {
+	color: var(--wc3d-ui-placeholder);
+}
+
+:where(.wc3d-app) .wc3d-input:hover:not(:disabled),
+:where(.wc3d-app) .wc3d-select:hover:not(:disabled),
+:where(.wc3d-app) .wc3d-textarea:hover:not(:disabled) {
+	border-color: var(--wc3d-ui-border-strong);
+	color: var(--wc3d-ui-title);
+}
+
+:where(.wc3d-app) .wc3d-input:focus,
+:where(.wc3d-app) .wc3d-select:focus,
+:where(.wc3d-app) .wc3d-textarea:focus {
+	border-color: var(--wc3d-ui-primary);
+	color: var(--wc3d-ui-title);
+	box-shadow: none;
+	outline: none;
+}
+
+:where(.wc3d-app) .wc3d-input:focus-visible,
+:where(.wc3d-app) .wc3d-select:focus-visible,
+:where(.wc3d-app) .wc3d-textarea:focus-visible {
+	outline: 2px solid var(--wc3d-ui-primary);
+	outline-offset: -1px;
+}
+
+:where(.wc3d-app) .wc3d-input:disabled,
+:where(.wc3d-app) .wc3d-select:disabled,
+:where(.wc3d-app) .wc3d-textarea:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+:where(.wc3d-app) :is(input, select, textarea).wc3d-input-sm {
+	height: 28px;
+	padding: 0 8px;
+	font-size: 12px;
+	border-radius: var(--wc3d-ui-radius-inner);
+}
+
+:where(.wc3d-app) :is(input, select, textarea).wc3d-input-mono {
+	font-family: var(--wc3d-ui-mono);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+}
+
+:where(.wc3d-app) :is(input, select, textarea).wc3d-select {
+	-webkit-appearance: none;
+	appearance: none;
+	padding-inline-end: 30px;
+	background-color: var(--wc3d-ui-tile);
+	/* stylelint-disable-next-line function-url-quotes */
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	cursor: pointer;
+}
+
+:where(.wc3d-app) .wc3d-select.wc3d-input-sm {
+	padding-inline-end: 26px;
+	background-position: right 8px center;
+}
+
+[dir="rtl"] :where(.wc3d-app) :is(input, select, textarea).wc3d-select {
+	background-position: left 10px center;
+}
+
+[dir="rtl"] :where(.wc3d-app) .wc3d-select.wc3d-input-sm {
+	background-position: left 8px center;
+}
+
+/* Segmented control: a grey strip of aria-pressed buttons. */
+.wc3d-seg {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 2px;
+	max-width: 100%;
+	padding: 3px;
+	box-sizing: border-box;
+	border-radius: var(--wc3d-ui-radius-control);
+	background: var(--wc3d-ui-field);
+}
+
+.wc3d-seg > button {
+	flex: 1 1 auto;
+	height: 28px;
+	min-height: 0;
+	padding: 0 12px;
+	margin: 0;
+	border: 0;
+	border-radius: var(--wc3d-ui-radius-inner);
+	background: transparent;
+	color: var(--wc3d-ui-text-2);
+	font-family: inherit;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1;
+	white-space: nowrap;
+	cursor: pointer;
+	box-shadow: none;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.wc3d-seg > button:hover:not(:disabled) {
+	color: var(--wc3d-ui-title);
+}
+
+.wc3d-seg > button[aria-pressed="true"],
+.wc3d-seg > button[aria-checked="true"],
+.wc3d-seg > button[aria-selected="true"] {
+	background: var(--wc3d-ui-save);
+	color: #fff;
+	font-weight: 600;
+}
+
+.wc3d-seg > button:focus-visible {
+	position: relative;
+	z-index: 1;
+	outline-offset: 2px;
+}
+
+/* Icon-only switch (theme, undo/redo): white box, pressed = strip + primary. */
+.wc3d-switchbox {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	height: 34px;
+	padding: 3px;
+	box-sizing: border-box;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+	background: var(--wc3d-ui-card);
+}
+
+.wc3d-switchbox > button {
+	display: grid;
+	place-items: center;
+	width: 26px;
+	height: 26px;
+	min-height: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	border-radius: var(--wc3d-ui-radius-inner);
+	background: transparent;
+	color: var(--wc3d-ui-desc);
+	cursor: pointer;
+	box-shadow: none;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.wc3d-switchbox > button:hover:not(:disabled) {
+	color: var(--wc3d-ui-title);
+	background: var(--wc3d-ui-bg);
+}
+
+.wc3d-switchbox > button[aria-pressed="true"],
+.wc3d-switchbox > button[aria-pressed="true"]:hover,
+.wc3d-switchbox > button[aria-checked="true"],
+.wc3d-switchbox > button[aria-checked="true"]:hover {
+	background: var(--wc3d-ui-strip);
+	color: var(--wc3d-ui-primary);
+}
+
+.wc3d-switchbox > button:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+
+/* Pill: count chips and filter chips. */
+.wc3d-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	height: 24px;
+	padding: 0 10px;
+	margin: 0;
+	box-sizing: border-box;
+	border: 0;
+	border-radius: 999px;
+	background: var(--wc3d-ui-field);
+	color: var(--wc3d-ui-text-2);
+	font-family: inherit;
+	font-size: 11.5px;
+	font-weight: 600;
+	line-height: 1;
+	white-space: nowrap;
+	box-shadow: none;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+button.wc3d-pill {
+	cursor: pointer;
+}
+
+button.wc3d-pill:hover:not(.wc3d-pill-active) {
+	color: var(--wc3d-ui-title);
+	background: var(--wc3d-ui-border);
+}
+
+.wc3d-pill-active {
+	background: var(--wc3d-ui-save);
+	color: #fff;
+}
+
+/* Status badges. */
+.wc3d-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	height: 20px;
+	padding: 0 8px;
+	box-sizing: border-box;
+	border-radius: 999px;
+	background: var(--wc3d-ui-field);
+	color: var(--wc3d-ui-text-2);
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.wc3d-badge-dot::before {
+	content: "";
+	flex: none;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: currentcolor;
+}
+
+.wc3d-badge-brand {
+	background: var(--wc3d-ui-info-bg);
+	color: var(--wc3d-ui-primary);
+}
+
+.wc3d-badge-success {
+	background: var(--wc3d-ui-ready-bg);
+	color: var(--wc3d-ui-ready-fg);
+}
+
+.wc3d-badge-warning {
+	background: var(--wc3d-ui-warn-bg);
+	color: var(--wc3d-ui-warn-fg);
+}
+
+.wc3d-badge-danger {
+	background: var(--wc3d-ui-danger-bg);
+	color: var(--wc3d-ui-danger-fg);
+}
+
+/* Dashed placeholder / empty slot. */
+.wc3d-dashed {
+	border: 1px dashed color-mix(in srgb, var(--wc3d-ui-border), var(--wc3d-ui-desc) 30%);
+	border-radius: var(--wc3d-ui-radius);
+	background: var(--wc3d-ui-bg);
+}
+
+.wc3d-divider {
+	border: 0;
+	border-top: 1px solid var(--wc3d-ui-rule);
+}
+
+
+/* Hotspots — mirrors the hotspot block in assets/css/frontend-static.css,
+ * which the editor does not enqueue. */
+.wc3d-hotspot-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	pointer-events: auto;
+}
+
+.wc3d-hotspot-ping {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	border-radius: 9999px;
+	background-color: color-mix(in srgb, var(--wc3d-ui-primary, #1b5cf0) 40%, transparent);
+	animation: wc3d-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+	pointer-events: none;
+}
+
+.wc3d-hotspot-button {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	border-radius: 9999px;
+	background-color: var(--wc3d-ui-primary-fill, #1b5cf0);
+	border: 1.5px solid rgba(255, 255, 255, 0.85);
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	cursor: pointer;
+	transition: transform 0.2s;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-size: 11px;
+	line-height: 1;
+	overflow: hidden;
+}
+
+.wc3d-hotspot-button:hover {
+	transform: scale(1.2);
+	background-color: color-mix(in srgb, var(--wc3d-ui-primary-fill, #1b5cf0), #000 15%);
+}
+
+.wc3d-hotspot-button:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--wc3d-ui-primary, #1b5cf0) 50%, transparent);
+}
+
+.wc3d-hotspot-button-pill {
+	position: absolute;
+	background-color: #fff;
+	color: #0f172a;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 6px;
+	padding: 5px 10px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 11.5px;
+	font-weight: 600;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	cursor: pointer;
+	white-space: nowrap;
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	box-sizing: border-box;
+	line-height: 1.2;
+}
+
+.wc3d-hotspot-button-pill:hover {
+	background-color: #f8fafc;
+	transform: scale(1.05);
+}
+
+.wc3d-hotspot-button-pill:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--wc3d-ui-primary, #1b5cf0) 50%, transparent);
+}
+
+.dark .wc3d-hotspot-button-pill {
+	background-color: #1e293b;
+	color: #f8fafc;
+	border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .wc3d-hotspot-button-pill:hover {
+	background-color: #334155;
+}
+
+.wc3d-hotspot-tooltip-wrap {
+	position: absolute;
+	bottom: 28px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	pointer-events: auto;
+	z-index: 10000;
+}
+
+.wc3d-hotspot-tooltip {
+	position: relative;
+	background-color: rgba(15, 23, 42, 0.95);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	color: #f8fafc;
+	padding: 12px 24px 12px 12px;
+	border-radius: 8px;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+	min-width: 200px;
+	max-width: 280px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 12.5px;
+	line-height: 1.4;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	box-sizing: border-box;
+}
+
+.wc3d-hotspot-tooltip-title {
+	font-weight: 700;
+	font-size: 13.5px;
+	color: #fff;
+	display: block;
+}
+
+.wc3d-hotspot-tooltip-desc {
+	font-size: 11.5px;
+	color: #94a3b8;
+	display: block;
+	white-space: pre-wrap;
+}
+
+.wc3d-hotspot-action-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 6px 12px;
+	background-color: var(--wc3d-ui-primary-fill, #1b5cf0);
+	color: #fff !important;
+	border: none;
+	border-radius: 4px;
+	font-size: 11.5px;
+	font-weight: 600;
+	cursor: pointer;
+	text-decoration: none !important;
+	transition: background-color 0.2s;
+	margin-top: 4px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.wc3d-hotspot-action-btn:hover {
+	background-color: color-mix(in srgb, var(--wc3d-ui-primary-fill, #1b5cf0), #000 15%);
+}
+
+.wc3d-hotspot-secondary-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 5px 12px;
+	background-color: transparent;
+	color: #94a3b8 !important;
+	border: 1px solid #475569;
+	border-radius: 4px;
+	font-size: 11.5px;
+	font-weight: 500;
+	cursor: pointer;
+	text-decoration: none !important;
+	transition: all 0.2s;
+	margin-top: 4px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.wc3d-hotspot-secondary-btn:hover {
+	border-color: #94a3b8;
+	color: #fff !important;
+}
+
+.wc3d-hotspot-product-card {
+	display: flex !important;
+	gap: 10px !important;
+	margin-top: 4px !important;
+	border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+	padding-top: 8px !important;
+	box-sizing: border-box !important;
+}
+
+.wc3d-hotspot-product-img {
+	width: 48px !important;
+	height: 48px !important;
+	max-width: 48px !important;
+	max-height: 48px !important;
+	object-fit: cover !important;
+	border-radius: 4px !important;
+	background: #1e293b !important;
+	flex-shrink: 0 !important;
+}
+
+.wc3d-hotspot-product-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 0;
+	flex: 1;
+}
+
+.wc3d-hotspot-product-title {
+	font-weight: 600;
+	font-size: 12px;
+	color: #f8fafc;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+}
+
+.wc3d-hotspot-product-price {
+	font-size: 11px;
+	color: #10b981;
+	margin-top: 1px;
+	display: block;
+}
+
+.wc3d-hotspot-spinner {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 50%;
+	border-top-color: #fff;
+	animation: wc3d-spin 0.8s linear infinite;
+	margin: 6px auto;
+}
+
+@keyframes wc3d-spin {
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.wc3d-hotspot-delete-btn {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	background: transparent;
+	border: none;
+	color: #94a3b8 !important;
+	font-weight: 700;
+	cursor: pointer;
+	font-size: 10px;
+	padding: 4px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: color 0.15s;
+	line-height: 1;
+}
+
+.wc3d-hotspot-delete-btn:hover {
+	color: #f87171 !important;
+}
+
+@keyframes wc3d-ping {
+
+	75%,
+	100% {
+		transform: scale(2.2);
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.wc3d-pulse,
+	.wc3d-hotspot-ping {
+		animation: none;
+	}
+
+	:where(.wc3d-app) .wc3d-btn,
+	:where(.wc3d-app) .wc3d-pill,
+	.wc3d-app input[type="range"]::-webkit-slider-thumb,
+	.wc3d-hotspot-button,
+	.wc3d-hotspot-button-pill {
+		transition: none;
+	}
+
+	:where(.wc3d-app) .wc3d-btn:hover,
+	.wc3d-hotspot-button:hover,
+	.wc3d-hotspot-button-pill:hover {
+		transform: none;
+	}
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+ * Shell — top bar, breadcrumbs, sidebar splitter, toggle and checkbox inputs.
+ * Token-driven so .dark only swaps variables.
+ * ────────────────────────────────────────────────────────────────────── */
+:where(.wc3d-app) .wc3d-tb-brand {
+	color: var(--wc3d-ui-title);
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	line-height: 1;
+}
+
+:where(.wc3d-app) .wc3d-crumb {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 4px;
+	background: none;
+	box-shadow: none;
+	color: var(--wc3d-ui-desc);
+	font-family: inherit;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	cursor: pointer;
+	transition: color 0.15s ease;
+}
+
+:where(.wc3d-app) button.wc3d-crumb:hover:not(:disabled) {
+	color: var(--wc3d-ui-title);
+}
+
+:where(.wc3d-app) button.wc3d-crumb:disabled {
+	cursor: default;
+}
+
+:where(.wc3d-app) .wc3d-crumb-current,
+:where(.wc3d-app) .wc3d-crumb.wc3d-crumb-current {
+	color: var(--wc3d-ui-title);
+	font-size: 13px;
+	font-weight: 600;
+}
+
+:where(.wc3d-app) .wc3d-crumb-sep {
+	color: var(--wc3d-ui-border-strong);
+}
+
+[dir="rtl"] :where(.wc3d-app) .wc3d-crumb-sep {
+	transform: scaleX(-1);
+}
+
+:where(.wc3d-app) .wc3d-topbar .wc3d-btn > svg {
+	flex: none;
+}
+
+/* Disabled Save reads as unavailable, not as a faded primary. */
+:where(.wc3d-app) .wc3d-btn-save:disabled {
+	opacity: 1;
+	background: var(--wc3d-ui-field);
+	color: var(--wc3d-ui-placeholder);
+}
+
+/* wp-admin draws a checkmark and a focus ring on every checkbox. */
+.wc3d-app input.wc3d-toggle-input[type="checkbox"]::before {
+	content: none;
+	display: none;
+}
+
+.wc3d-app input.wc3d-toggle-input:focus {
+	border: 0;
+	box-shadow: none;
+}
+
+.wc3d-app input.wc3d-toggle-input:focus-visible {
+	outline: 2px solid var(--wc3d-ui-primary);
+	outline-offset: 2px;
+}
+
+/* Square checkbox (components/ui/Checkbox); [type] outranks wp-admin's checkbox rules. */
+.wc3d-app input.wc3d-checkbox[type="checkbox"] {
+	--wc3d-checkbox-edge: var(--wc3d-ui-border-strong);
+	-webkit-appearance: none;
+	appearance: none;
+	position: relative;
+	display: inline-block;
+	flex: none;
+	width: 16px;
+	min-width: 0;
+	height: 16px;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border: 1.5px solid var(--wc3d-checkbox-edge);
+	border-radius: 4px;
+	background: var(--wc3d-ui-card);
+	box-shadow: none;
+	vertical-align: middle;
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.wc3d-app input.wc3d-checkbox[type="checkbox"]::before {
+	content: none;
+	display: none;
+}
+
+.wc3d-app input.wc3d-checkbox[type="checkbox"]:hover:not(:disabled, :checked, :indeterminate) {
+	--wc3d-checkbox-edge: var(--wc3d-ui-desc);
+}
+
+.wc3d-app input.wc3d-checkbox[type="checkbox"]:checked,
+.wc3d-app input.wc3d-checkbox[type="checkbox"]:indeterminate {
+	--wc3d-checkbox-edge: var(--wc3d-ui-check);
+	background: var(--wc3d-ui-check);
+}
+
+.wc3d-app input.wc3d-checkbox[type="checkbox"]:focus {
+	border-color: var(--wc3d-checkbox-edge);
+	box-shadow: none;
+}
+
+.wc3d-app input.wc3d-checkbox[type="checkbox"]:focus-visible {
+	outline: 2px solid var(--wc3d-ui-primary);
+	outline-offset: 2px;
+}
+
+.wc3d-app input.wc3d-checkbox[type="checkbox"]:checked::after {
+	content: "";
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	width: 6px;
+	height: 10px;
+	box-sizing: border-box;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.wc3d-app input.wc3d-checkbox[type="checkbox"]:indeterminate::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 8px;
+	height: 2px;
+	border: 0;
+	border-radius: 1px;
+	background: #fff;
+	transform: translate(-50%, -50%);
+}
+
+.wc3d-app input.wc3d-checkbox[type="checkbox"]:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+:where(.wc3d-app) .wc3d-splitter:focus-visible {
+	outline: none;
+}
+
+:where(.wc3d-app) .wc3d-splitter:focus-visible .wc3d-splitter__line {
+	opacity: 1;
+}

@@ -1,0 +1,1373 @@
+/**
+ * 3D Models page, Settings tab: src/admin/list/settings.css verbatim, then prototype stand-ins
+ * for the two WordPress core widgets the tab uses (Iris colour picker, media modal).
+ */
+
+/* The wrapper is the container: a container query cannot style the container itself. */
+.wc3d-ui .wc3d-settings-wrapper {
+	max-width: none;
+	margin: 0;
+	padding: 0;
+	font-family: inherit;
+	color: inherit;
+	container: wc3d-settings / inline-size;
+}
+
+.wc3d-ui .wc3d-settings-dashboard {
+	--wc3d-settings-sidebar-w: 240px;
+
+	display: block;
+}
+
+/* ── Section menu: tab grid by default; a collapsible, resizable sidebar once the panel is wide enough ── */
+.wc3d-ui .wc3d-settings-sidebar {
+	position: relative;
+	min-width: 0;
+}
+
+.wc3d-ui .wc3d-settings-tabs {
+	gap: 10px;
+	padding: 10px 12px;
+}
+
+.wc3d-ui .wc3d-settings-tabs .wc3d-tab {
+	gap: 8px;
+	padding: 0 12px;
+}
+
+.wc3d-ui .wc3d-settings-tabs .wc3d-tab:focus-visible {
+	outline: 2px solid var(--wc3d-ui-primary);
+	outline-offset: 2px;
+}
+
+/* Toggle and handle need the script and the sidebar layout. */
+.wc3d-ui .wc3d-settings-sidebar__toggle,
+.wc3d-ui .wc3d-settings-sidebar__handle {
+	display: none;
+}
+
+@container wc3d-settings (max-width: 719px) {
+
+	.wc3d-ui .wc3d-settings-tabs {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.wc3d-ui .wc3d-settings-tabs .wc3d-tab:last-child:nth-child(3n+1) {
+		grid-column: 1 / -1;
+	}
+}
+
+@container wc3d-settings (max-width: 639px) {
+
+	.wc3d-ui .wc3d-settings-tabs {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 8px;
+		padding: 8px;
+	}
+
+	.wc3d-ui .wc3d-settings-tabs .wc3d-tab:last-child {
+		grid-column: auto;
+	}
+
+	.wc3d-ui .wc3d-settings-tabs .wc3d-tab:last-child:nth-child(2n+1) {
+		grid-column: 1 / -1;
+	}
+
+	.wc3d-ui .wc3d-settings-tabs .wc3d-tab {
+		height: auto;
+		min-height: 44px;
+		padding: 8px 12px;
+		line-height: 1.25;
+		white-space: normal;
+	}
+}
+
+@container wc3d-settings (min-width: 720px) {
+
+	.wc3d-ui .wc3d-settings-dashboard.is-tabbed,
+	.wc3d-ui .wc3d-settings-dashboard.is-pending {
+		display: grid;
+		grid-template-columns: clamp(180px, var(--wc3d-settings-sidebar-w), 40%) minmax(0, 1fr);
+		align-items: start;
+		column-gap: 24px;
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-settings-sidebar,
+	.wc3d-ui .is-pending .wc3d-settings-sidebar {
+		position: sticky;
+		top: calc(var(--wp-admin--admin-bar--height, 32px) + 16px);
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-settings-tabs,
+	.wc3d-ui .is-pending .wc3d-settings-tabs {
+		flex-direction: column;
+		flex-wrap: nowrap;
+		gap: 6px;
+		padding: 10px;
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-settings-tabs .wc3d-tab,
+	.wc3d-ui .is-pending .wc3d-settings-tabs .wc3d-tab {
+		justify-content: flex-start;
+		gap: 10px;
+		width: 100%;
+		padding: 0 14px;
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-settings-tabs .wc3d-tab > span,
+	.wc3d-ui .is-pending .wc3d-settings-tabs .wc3d-tab > span {
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-settings-sidebar__toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		width: 100%;
+		height: 40px;
+		margin: 0;
+		padding: 0 14px;
+		border: 1px solid var(--wc3d-ui-border);
+		border-radius: var(--wc3d-ui-radius-control);
+		background: var(--wc3d-ui-card);
+		color: var(--wc3d-ui-desc);
+		font-family: inherit;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1;
+		white-space: nowrap;
+		cursor: pointer;
+		transition: border-color 0.15s ease, color 0.15s ease;
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-settings-sidebar__toggle:hover {
+		border-color: var(--wc3d-ui-border-strong);
+		color: var(--wc3d-ui-title);
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-settings-sidebar__toggle:focus-visible {
+		outline: 2px solid var(--wc3d-ui-primary);
+		outline-offset: 2px;
+	}
+
+	.wc3d-ui .wc3d-settings-sidebar__toggle-icon {
+		display: inline-flex;
+		flex: none;
+	}
+
+	.wc3d-ui .wc3d-settings-sidebar__toggle-icon--expand,
+	.wc3d-ui .is-sidebar-collapsed .wc3d-settings-sidebar__toggle-icon--collapse {
+		display: none;
+	}
+
+	.wc3d-ui .is-sidebar-collapsed .wc3d-settings-sidebar__toggle-icon--expand {
+		display: inline-flex;
+	}
+
+	/* Drag handle in the column gap, drawn like the 3D Viewer page splitter. */
+	.wc3d-ui .is-tabbed .wc3d-settings-sidebar__handle {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		inset-inline-end: -20px;
+		z-index: 2;
+		display: flex;
+		justify-content: center;
+		width: 16px;
+		cursor: col-resize;
+		touch-action: none;
+	}
+
+	.wc3d-ui .wc3d-settings-sidebar__handle::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 50%;
+		width: 3px;
+		margin-left: -1.5px;
+		border-radius: 3px;
+		background: var(--wc3d-ui-primary);
+		opacity: 0;
+		transition: opacity 0.15s ease;
+	}
+
+	.wc3d-ui .wc3d-settings-sidebar__handle:hover::after,
+	.wc3d-ui .wc3d-settings-sidebar__handle.is-dragging::after {
+		opacity: 0.45;
+	}
+
+	.wc3d-ui .wc3d-settings-sidebar__handle:focus-visible {
+		outline: none;
+	}
+
+	.wc3d-ui .wc3d-settings-sidebar__handle:focus-visible::after {
+		opacity: 1;
+	}
+
+	.wc3d-ui .wc3d-settings-sidebar__grip {
+		z-index: 1;
+		align-self: center;
+		width: 8px;
+		height: 36px;
+		padding: 8px 0;
+		border: 1px solid var(--wc3d-ui-border);
+		border-radius: 999px;
+		background: radial-gradient(circle, var(--wc3d-ui-desc) 1px, transparent 1.5px) center / 4px 6px repeat-y content-box, var(--wc3d-ui-card) padding-box;
+		box-shadow: var(--wc3d-ui-shadow-raised);
+		transition: border-color 0.15s ease;
+	}
+
+	.wc3d-ui .wc3d-settings-sidebar__handle:hover .wc3d-settings-sidebar__grip,
+	.wc3d-ui .wc3d-settings-sidebar__handle.is-dragging .wc3d-settings-sidebar__grip,
+	.wc3d-ui .wc3d-settings-sidebar__handle:focus-visible .wc3d-settings-sidebar__grip {
+		border-color: var(--wc3d-ui-primary);
+		background: radial-gradient(circle, #fff 1px, transparent 1.5px) center / 4px 6px repeat-y content-box, var(--wc3d-ui-primary) padding-box;
+	}
+
+	/* Collapsed: an icon rail. Labels stay in the DOM for the tab names; the script adds title tooltips. */
+	.wc3d-ui .wc3d-settings-dashboard.is-sidebar-collapsed {
+		grid-template-columns: 64px minmax(0, 1fr);
+	}
+
+	.wc3d-ui .is-sidebar-collapsed .wc3d-settings-tabs .wc3d-tab,
+	.wc3d-ui .is-sidebar-collapsed .wc3d-settings-sidebar__toggle {
+		justify-content: center;
+		padding: 0;
+	}
+
+	.wc3d-ui .is-sidebar-collapsed .wc3d-settings-tabs .wc3d-tab > span,
+	.wc3d-ui .is-sidebar-collapsed .wc3d-settings-sidebar__toggle-text {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+
+	.wc3d-ui .is-sidebar-collapsed .wc3d-settings-sidebar__handle {
+		display: none;
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-settings-section,
+	.wc3d-ui .is-pending .wc3d-settings-section {
+		padding: 10px 4px 4px;
+	}
+
+	.wc3d-ui .is-tabbed .wc3d-actions,
+	.wc3d-ui .is-pending .wc3d-actions {
+		margin-inline: 4px;
+	}
+}
+
+body.wc3d-resizing,
+body.wc3d-resizing * {
+	cursor: col-resize !important;
+	user-select: none !important;
+}
+
+.wc3d-ui .wc3d-dashboard-content {
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+
+/* ── Sections: all stacked without JS; one at a time once the tabs are wired (or pre-paint, until then) ── */
+.wc3d-ui .wc3d-settings-section {
+	padding: 32px 20px 4px;
+}
+
+.wc3d-ui .wc3d-settings-section + .wc3d-settings-section {
+	border-top: 1px solid var(--wc3d-ui-rule);
+}
+
+.wc3d-ui .is-pending .wc3d-settings-section,
+.wc3d-ui .is-tabbed .wc3d-settings-section {
+	border-top: 0;
+}
+
+/* Hidden fields still submit with the form. */
+.wc3d-ui .is-pending .wc3d-settings-section:not(.is-active),
+.wc3d-ui .wc3d-settings-section[hidden] {
+	display: none;
+}
+
+.wc3d-ui .wc3d-section-head {
+	margin: 0 0 10px;
+}
+
+.wc3d-ui .wc3d-section-title {
+	margin: 0;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var(--wc3d-ui-heading);
+}
+
+.wc3d-ui .wc3d-section-desc {
+	margin: 4px 0 0;
+	font-size: 14px;
+	line-height: 1.45;
+	color: var(--wc3d-ui-desc);
+}
+
+/* ── Position: selectable mode cards with a layout preview ── */
+.wc3d-ui .wc3d-mode-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(156px, 1fr));
+	gap: 14px;
+	width: 100%;
+}
+
+.wc3d-ui .wc3d-mode-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	min-width: 0;
+	margin: 0;
+	padding: 12px;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+	background: var(--wc3d-ui-card);
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.wc3d-ui .wc3d-mode-card:hover {
+	border-color: var(--wc3d-ui-border-strong);
+}
+
+.wc3d-ui .wc3d-mode-card:has(.wc3d-mode-card__input:checked) {
+	border-color: var(--wc3d-ui-primary);
+	background: var(--wc3d-ui-strip);
+}
+
+.wc3d-ui .wc3d-mode-card:has(.wc3d-mode-card__input:focus-visible) {
+	outline: 2px solid var(--wc3d-ui-primary);
+	outline-offset: 2px;
+}
+
+.wc3d-ui .wc3d-mode-card__input {
+	position: absolute;
+	top: 0;
+	inset-inline-start: 0;
+	width: 1px;
+	height: 1px;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.wc3d-ui .wc3d-layout-preview {
+	display: block;
+	padding: 8px;
+	border-radius: var(--wc3d-ui-radius-inner);
+	background: var(--wc3d-ui-tile);
+	color: var(--wc3d-ui-primary);
+	transition: background-color 0.15s ease;
+}
+
+.wc3d-ui .wc3d-mode-card__input:checked ~ .wc3d-layout-preview {
+	background: var(--wc3d-ui-card);
+}
+
+.wc3d-ui .wc3d-layout-preview svg {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.wc3d-ui .wc3d-mode-card__foot {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+}
+
+.wc3d-ui .wc3d-mode-card__text {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+
+.wc3d-ui .wc3d-mode-card__name {
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: var(--wc3d-ui-title);
+}
+
+.wc3d-ui .wc3d-mode-card__desc {
+	font-size: 12px;
+	line-height: 1.4;
+	color: var(--wc3d-ui-desc);
+}
+
+.wc3d-ui .wc3d-mode-card__radio {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 20px;
+	height: 20px;
+	border: 1.5px solid var(--wc3d-ui-border-strong);
+	border-radius: 50%;
+	background: var(--wc3d-ui-card);
+}
+
+.wc3d-ui .wc3d-mode-card__input:checked ~ .wc3d-mode-card__foot .wc3d-mode-card__radio {
+	border-color: var(--wc3d-ui-primary);
+}
+
+.wc3d-ui .wc3d-mode-card__input:checked ~ .wc3d-mode-card__foot .wc3d-mode-card__radio::after {
+	content: "";
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--wc3d-ui-primary);
+}
+
+/* ── Palette: full-width input with swatches under it ── */
+.wc3d-ui .wc3d-palette {
+	flex-direction: column;
+	align-items: stretch;
+	gap: 12px;
+}
+
+.wc3d-ui .wc3d-palette .wc3d-input {
+	width: 100%;
+}
+
+.wc3d-ui .wc3d-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.wc3d-ui .wc3d-swatches:empty {
+	display: none;
+}
+
+.wc3d-ui .wc3d-swatch {
+	display: block;
+	width: 26px;
+	height: 26px;
+	border-radius: var(--wc3d-ui-radius-inner);
+	box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.14);
+}
+
+/* ── Background image: media chip · name · Choose image · Remove ── */
+.wc3d-ui .wc3d-media {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+}
+
+.wc3d-ui .wc3d-media__chip {
+	position: relative;
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+	background: var(--wc3d-ui-bg);
+	color: var(--wc3d-ui-muted);
+}
+
+.wc3d-ui .wc3d-media__chip img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.wc3d-ui .wc3d-media__name {
+	max-width: 240px;
+	overflow: hidden;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	color: var(--wc3d-ui-title);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.wc3d-ui .wc3d-media__name.is-empty {
+	font-weight: 400;
+	color: var(--wc3d-ui-desc);
+}
+
+.wc3d-ui .wc3d-media .wc3d-btn-soft {
+	padding-inline: 16px;
+}
+
+.wc3d-ui .wc3d-media__remove {
+	height: 40px;
+	padding: 0 6px;
+}
+
+/* ── Background colour: Iris drawn as the new UI's "Select Color" button ── */
+.wc3d-ui .wc3d-bg-color-row .wp-picker-container {
+	position: relative;
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-picker-container .wp-color-result.button {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	height: 40px;
+	min-height: 40px;
+	margin: 0;
+	padding-block: 10px;
+	padding-inline: 8px 0;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+	background-clip: content-box;
+	box-shadow: none;
+	color: var(--wc3d-ui-title);
+	font-family: inherit;
+	font-size: 14px;
+	line-height: 18px;
+	vertical-align: middle;
+	transition: border-color 0.15s ease;
+}
+
+/* Rounds the swatch: the colour shows through the content box, this masks its corners. */
+.wc3d-ui .wc3d-bg-color-row .wp-color-result.button::before {
+	content: "";
+	position: absolute;
+	top: 10px;
+	inset-inline-start: 8px;
+	width: 26px;
+	height: 18px;
+	border-radius: 4px;
+	box-shadow: 0 0 0 4px var(--wc3d-ui-card), inset 0 0 0 1px rgba(15, 23, 42, 0.18);
+	pointer-events: none;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-color-result.button:hover,
+.wc3d-ui .wc3d-bg-color-row .wp-color-result.button:focus {
+	border-color: #94a3b8;
+	box-shadow: none;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-color-result.button:focus-visible {
+	outline: 2px solid var(--wc3d-ui-primary);
+	outline-offset: 1px;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-color-result .wp-color-result-text {
+	display: block;
+	height: 18px;
+	margin: 0;
+	margin-inline-start: 26px;
+	padding: 0 14px 0 12px;
+	border: 0;
+	border-radius: 0;
+	background: var(--wc3d-ui-card);
+	color: var(--wc3d-ui-title);
+	font-size: 14px;
+	line-height: 18px;
+	white-space: nowrap;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-picker-input-wrap:not(.hidden) {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-picker-input-wrap label {
+	display: inline-flex;
+	margin: 0;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-picker-container input.wp-color-picker {
+	width: 112px;
+	height: 40px;
+	margin: 0;
+	padding: 0 12px;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+	font-family: var(--wc3d-ui-mono);
+	font-size: 13px;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-picker-container .wp-picker-clear,
+.wc3d-ui .wc3d-bg-color-row .wp-picker-container .wp-picker-default {
+	height: 40px;
+	min-height: 0;
+	margin: 0;
+	padding: 0 14px;
+	border: 0;
+	border-radius: var(--wc3d-ui-radius-control);
+	background: var(--wc3d-ui-field);
+	box-shadow: none;
+	color: var(--wc3d-ui-text-2);
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-picker-container .wp-picker-clear:hover,
+.wc3d-ui .wc3d-bg-color-row .wp-picker-container .wp-picker-default:hover {
+	background: var(--wc3d-ui-border);
+	color: var(--wc3d-ui-title);
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-picker-holder {
+	position: absolute;
+	top: calc(100% + 6px);
+	inset-inline-end: 0;
+	z-index: 30;
+}
+
+.wc3d-ui .wc3d-bg-color-row .wp-picker-holder .iris-picker {
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius);
+	background: var(--wc3d-ui-card);
+	box-shadow: var(--wc3d-ui-shadow-pop);
+}
+
+/* ── Shortcode selector field with the copy button inside ── */
+.wc3d-ui .wc3d-selector-field {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	min-width: min(320px, 100%);
+	max-width: 100%;
+	height: var(--wc3d-ui-control-h);
+	padding-inline: 12px;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+	background: var(--wc3d-ui-bg);
+	color: var(--wc3d-ui-heading);
+	font-family: var(--wc3d-ui-mono);
+	font-size: 13px;
+}
+
+.wc3d-ui .wc3d-selector-field__code {
+	min-width: 0;
+	overflow: hidden;
+	padding: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.wc3d-ui .wc3d-row__desc .wc3d-code {
+	padding: 0 6px;
+	font-size: 12.5px;
+}
+
+.wc3d-ui .wc3d-copy-btn {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 30px;
+	height: 30px;
+	margin: 0;
+	margin-inline-end: -7px;
+	padding: 0;
+	border: 0;
+	border-radius: var(--wc3d-ui-radius-inner);
+	background: transparent;
+	color: var(--wc3d-ui-desc);
+	cursor: pointer;
+	transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.wc3d-ui .wc3d-copy-btn:hover,
+.wc3d-ui .wc3d-copy-btn:focus-visible {
+	background: var(--wc3d-ui-card);
+	color: var(--wc3d-ui-primary);
+}
+
+/* Copy needs the script. */
+.wc3d-ui .wc3d-settings-dashboard:not(.is-tabbed) .wc3d-copy-btn {
+	display: none;
+}
+
+.wc3d-ui .wc3d-copy-btn__copy {
+	display: inline-flex;
+}
+
+.wc3d-ui .wc3d-copy-btn__done,
+.wc3d-ui .wc3d-copy-btn.is-copied .wc3d-copy-btn__copy {
+	display: none;
+}
+
+.wc3d-ui .wc3d-copy-btn.is-copied .wc3d-copy-btn__done {
+	display: inline-flex;
+}
+
+.wc3d-ui .wc3d-copy-btn.is-copied {
+	color: var(--wc3d-ui-success-fg);
+}
+
+.wc3d-ui .wc3d-copy-status {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--wc3d-ui-success-fg);
+}
+
+/* Stays in the accessibility tree while empty so the announcement is reliable. */
+.wc3d-ui .wc3d-copy-status:empty {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+}
+
+/* ── Danger card (Delete data on uninstall) ── */
+.wc3d-ui .wc3d-danger-card {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px 18px;
+	margin: 8px 0 16px;
+	padding: 21px 24px;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius);
+	background: var(--wc3d-ui-card);
+}
+
+.wc3d-ui .wc3d-danger-card__icon {
+	display: grid;
+	flex: none;
+	place-items: center;
+	color: var(--wc3d-ui-off);
+}
+
+.wc3d-ui .wc3d-danger-card .wc3d-row__main {
+	flex: 1 1 0;
+	min-width: 200px;
+}
+
+/* ── Features: one setting row per feature module; the icon tile shows its status ── */
+.wc3d-ui .wc3d-module:has(.wc3d-module__settings) {
+	align-items: flex-start;
+}
+
+.wc3d-ui .wc3d-module--active .wc3d-row__icon {
+	background: var(--wc3d-ui-ready-bg);
+	color: var(--wc3d-ui-ready-fg);
+}
+
+.wc3d-ui .wc3d-module--blocked .wc3d-row__icon,
+.wc3d-ui .wc3d-module--killed .wc3d-row__icon {
+	background: var(--wc3d-ui-warn-bg);
+	color: var(--wc3d-ui-warn-fg);
+}
+
+.wc3d-ui .wc3d-module--failed .wc3d-row__icon {
+	background: var(--wc3d-ui-danger-bg);
+	color: var(--wc3d-ui-danger-fg);
+}
+
+.wc3d-ui .wc3d-module__badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 8px 0 0;
+}
+
+.wc3d-ui .wc3d-module__reason {
+	margin: 6px 0 0;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 18px;
+	color: var(--wc3d-ui-warn-fg);
+}
+
+.wc3d-ui .wc3d-module--failed .wc3d-module__reason {
+	color: var(--wc3d-ui-danger-fg);
+}
+
+.wc3d-ui .wc3d-module__settings {
+	margin: 12px 0 0;
+	padding: 12px 14px;
+	border: 1px solid var(--wc3d-ui-border);
+	border-radius: var(--wc3d-ui-radius-control);
+	background: var(--wc3d-ui-bg);
+}
+
+/* Needs the customer drawer while it is off: muted note, dimmed body; the switch stays usable. */
+.wc3d-ui .wc3d-module__needs {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	margin: 8px 0 0;
+	font-size: 13px;
+	line-height: 18px;
+	color: var(--wc3d-ui-desc);
+}
+
+.wc3d-ui .wc3d-module__needs svg {
+	flex: none;
+	margin-top: 2px;
+}
+
+.wc3d-ui .wc3d-module__needs a {
+	color: var(--wc3d-ui-primary);
+}
+
+.wc3d-ui .wc3d-module--dimmed > .wc3d-row__icon,
+.wc3d-ui .wc3d-module--dimmed > .wc3d-row__main > :is(.wc3d-row__title, .wc3d-row__desc, .wc3d-module__badges, .wc3d-module__settings) {
+	opacity: 0.6;
+}
+
+.wc3d-ui .wc3d-modules__empty {
+	margin: 0;
+	padding: 16px 0;
+	font-size: 14px;
+	line-height: 20px;
+	color: var(--wc3d-ui-desc);
+}
+
+.wc3d-ui .wc3d-modules__note {
+	margin: 4px 0 16px;
+	font-size: 13px;
+	line-height: 18px;
+	color: var(--wc3d-ui-desc);
+}
+
+.wc3d-ui .wc3d-modules__note--error {
+	color: var(--wc3d-ui-danger-fg);
+}
+
+/* ── Action bar: Save changes + status; sticks to the viewport bottom on long sections ── */
+.wc3d-ui .wc3d-actions {
+	position: sticky;
+	bottom: 16px;
+	z-index: 15;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px 16px;
+	margin: 20px 20px 0;
+	padding: 0;
+}
+
+.wc3d-ui .wc3d-actions::before {
+	content: "";
+	position: absolute;
+	inset: -12px -16px;
+	z-index: -1;
+	border-radius: 12px;
+	background: var(--wc3d-ui-card);
+	box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.18), 0 2px 6px rgba(15, 23, 42, 0.06);
+	opacity: 0;
+	transition: opacity 0.15s ease;
+	pointer-events: none;
+}
+
+.wc3d-ui .wc3d-actions.is-sticky::before {
+	opacity: 1;
+}
+
+.wc3d-ui .wc3d-actions__status {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0;
+	margin-inline-end: auto;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 20px;
+	color: var(--wc3d-ui-desc);
+}
+
+.wc3d-ui .wc3d-actions__status.is-dirty {
+	color: var(--wc3d-ui-warn-fg);
+}
+
+.wc3d-ui .wc3d-actions__status.is-saved {
+	color: var(--wc3d-ui-success-fg);
+}
+
+.wc3d-ui .wc3d-actions__status.is-dirty::before,
+.wc3d-ui .wc3d-actions__status.is-saved::before {
+	content: "";
+	flex: none;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: currentcolor;
+	box-shadow: 0 0 0 3px color-mix(in srgb, currentcolor 20%, transparent);
+}
+
+#wc3d-submit-sentinel {
+	height: 1px;
+}
+
+@media screen and (max-width: 782px) {
+
+	.wc3d-ui .wc3d-settings-dashboard {
+		padding: 12px;
+	}
+
+	.wc3d-ui .wc3d-settings-section {
+		padding: 24px 4px 4px;
+	}
+
+	.wc3d-ui .wc3d-mode-grid {
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	}
+
+	.wc3d-ui .wc3d-settings-section .wc3d-select {
+		min-width: 0;
+		width: 100%;
+	}
+
+	.wc3d-ui .wc3d-danger-card .wc3d-row__control {
+		padding-inline-start: 38px;
+	}
+
+	.wc3d-ui .wc3d-danger-card {
+		padding: 16px;
+	}
+
+	.wc3d-ui .wc3d-actions {
+		margin: 16px 4px 0;
+	}
+}
+
+/* ── Prototype: WP core .wp-color-result base (wp-color-picker.css) under the overrides above ── */
+.wc3d-ui .wc3d-bg-color-row .wp-picker-container .wp-color-result.button {
+	cursor: pointer;
+}
+
+/* ── Prototype: Iris picker (iris.min.js draws this in core) ── */
+.wc3d-ui .iris-picker {
+	padding: 10px;
+	user-select: none;
+	touch-action: none;
+}
+
+.wc3d-ui .iris-picker-inner {
+	display: flex;
+	gap: 12px;
+}
+
+.wc3d-ui .iris-square {
+	position: relative;
+	width: 182px;
+	height: 182px;
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+	cursor: crosshair;
+}
+
+.wc3d-ui .iris-square::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: linear-gradient(to top, #000, rgba(0, 0, 0, 0)), linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+}
+
+.wc3d-ui .iris-square-value {
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	margin: -7px 0 0 -7px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+	pointer-events: none;
+}
+
+.wc3d-ui .iris-strip {
+	position: relative;
+	width: 20px;
+	height: 182px;
+	border-radius: 4px;
+	background: linear-gradient(to bottom, #f00, #f0f 16.66%, #00f 33.33%, #0ff 50%, #0f0 66.66%, #ff0 83.33%, #f00);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+	cursor: ns-resize;
+}
+
+.wc3d-ui .iris-slider-handle {
+	position: absolute;
+	left: -3px;
+	right: -3px;
+	height: 6px;
+	margin-top: -3px;
+	border: 1px solid #c3c4c7;
+	border-radius: 3px;
+	background: #f6f7f7;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	pointer-events: none;
+}
+
+.wc3d-ui .iris-palette-container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+}
+
+.wc3d-ui .iris-palette {
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	border: 0;
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+	cursor: pointer;
+}
+
+/* ── Prototype: WP media modal ("Choose a background image") ── */
+.wc3d-media-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 160000;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 13px;
+	color: #3c434a;
+}
+
+.wc3d-media-modal .media-modal-backdrop {
+	position: absolute;
+	inset: 0;
+	background: #000;
+	opacity: 0.7;
+}
+
+.wc3d-media-modal .media-modal {
+	position: absolute;
+	inset: 30px;
+	display: grid;
+	grid-template-rows: auto auto 1fr auto;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+	outline: 0;
+}
+
+.wc3d-media-modal .media-modal-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 2;
+	width: 50px;
+	height: 50px;
+	margin: 0;
+	padding: 0;
+	border: 1px solid transparent;
+	background: none;
+	color: #646970;
+	cursor: pointer;
+}
+
+.wc3d-media-modal .media-modal-close:hover,
+.wc3d-media-modal .media-modal-close:focus {
+	color: #135e96;
+}
+
+.wc3d-media-modal .media-modal-icon {
+	font-size: 26px;
+	line-height: 1;
+}
+
+.wc3d-media-modal .media-frame-title h1 {
+	margin: 0;
+	padding: 0 50px 0 16px;
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 50px;
+	color: #1d2327;
+}
+
+.wc3d-media-modal .media-frame-router {
+	display: flex;
+	padding: 0 8px;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.wc3d-media-modal .media-menu-item {
+	position: relative;
+	margin: 0;
+	padding: 8px 10px 14px;
+	border: 0;
+	background: none;
+	color: #3c434a;
+	font: inherit;
+	font-size: 14px;
+	line-height: 18px;
+	cursor: pointer;
+}
+
+.wc3d-media-modal .media-menu-item:hover {
+	color: #2271b1;
+}
+
+.wc3d-media-modal .media-menu-item.active::after {
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: -1px;
+	left: 0;
+	height: 4px;
+	background: #3858e9;
+}
+
+.wc3d-media-modal .media-frame-content {
+	position: relative;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.wc3d-media-modal .uploader-inline {
+	display: grid;
+	place-items: center;
+	height: 100%;
+	padding: 20px;
+	text-align: center;
+}
+
+.wc3d-media-modal .upload-instructions {
+	margin: 0 0 8px;
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 1.4;
+	color: #1d2327;
+}
+
+.wc3d-media-modal .upload-or {
+	margin: 0 0 10px;
+}
+
+.wc3d-media-modal .upload-error {
+	max-width: 420px;
+	margin: 14px auto 0;
+	color: #d63638;
+}
+
+.wc3d-media-modal .max-upload-size {
+	margin: 14px 0 0;
+	color: #646970;
+}
+
+.wc3d-media-modal .attachments-browser {
+	display: grid;
+	grid-template-columns: 1fr 267px;
+	grid-template-rows: auto 1fr;
+	height: 100%;
+}
+
+.wc3d-media-modal .media-toolbar {
+	display: flex;
+	grid-column: 1;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 8px 16px;
+	padding: 0 16px 10px;
+}
+
+.wc3d-media-modal .media-toolbar select,
+.wc3d-media-modal .media-toolbar input[type="search"] {
+	height: 30px;
+	margin-top: 11px;
+	padding: 0 8px;
+	border: 1px solid #8c8f94;
+	border-radius: 3px;
+	background: #fff;
+	color: #2c3338;
+	font: inherit;
+	font-size: 14px;
+}
+
+.wc3d-media-modal .media-toolbar select {
+	padding-right: 24px;
+}
+
+.wc3d-media-modal .media-search-input-label {
+	display: block;
+	margin-top: 11px;
+	color: #3c434a;
+}
+
+.wc3d-media-modal .media-toolbar input[type="search"] {
+	width: 280px;
+	max-width: 100%;
+	margin-top: 4px;
+}
+
+.wc3d-media-modal .attachments-wrapper {
+	grid-column: 1;
+	overflow: auto;
+	padding: 2px 8px 8px 16px;
+}
+
+.wc3d-media-modal .attachments {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+	gap: 16px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.wc3d-media-modal .attachment {
+	position: relative;
+	margin: 0;
+}
+
+.wc3d-media-modal .attachment-preview {
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: #f0f0f1;
+	box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	aspect-ratio: 1;
+}
+
+.wc3d-media-modal .attachment-preview .thumbnail,
+.wc3d-media-modal .attachment-preview img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.wc3d-media-modal .attachment.selected .attachment-preview {
+	box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #2271b1;
+}
+
+.wc3d-media-modal .attachment.selected .attachment-preview img {
+	padding: 7px;
+}
+
+.wc3d-media-modal .attachment-preview:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+.wc3d-media-modal .check {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: grid;
+	place-items: center;
+	width: 24px;
+	height: 24px;
+	background: #2271b1;
+	box-shadow: 0 0 0 1px #fff, 0 0 0 2px #2271b1;
+	color: #fff;
+	font-size: 14px;
+	pointer-events: none;
+}
+
+.wc3d-media-modal .no-media {
+	margin: 20px 0;
+	font-size: 18px;
+	color: #646970;
+}
+
+.wc3d-media-modal .media-sidebar {
+	grid-row: 1 / 3;
+	grid-column: 2;
+	overflow: auto;
+	padding: 0 16px 16px;
+	border-left: 1px solid #dcdcde;
+	background: #f6f7f7;
+}
+
+.wc3d-media-modal .attachment-details h2 {
+	margin: 24px 0 8px;
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: #646970;
+}
+
+.wc3d-media-modal .attachment-info {
+	display: flex;
+	gap: 12px;
+	padding-bottom: 11px;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.wc3d-media-modal .attachment-info .thumbnail {
+	flex: none;
+	width: 120px;
+}
+
+.wc3d-media-modal .attachment-info .thumbnail img {
+	display: block;
+	width: 100%;
+	height: auto;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.wc3d-media-modal .attachment-info .details {
+	min-width: 0;
+	font-size: 12px;
+	line-height: 1.5;
+	overflow-wrap: anywhere;
+}
+
+.wc3d-media-modal .media-frame-toolbar {
+	display: flex;
+	justify-content: flex-end;
+	padding: 13px 16px;
+	border-top: 1px solid #dcdcde;
+}
+
+@media screen and (max-width: 782px) {
+
+	.wc3d-media-modal .media-modal {
+		inset: 10px;
+	}
+
+	.wc3d-media-modal .attachments-browser {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 1fr auto;
+	}
+
+	.wc3d-media-modal .media-sidebar {
+		grid-row: 3;
+		grid-column: 1;
+		max-height: 160px;
+		border-top: 1px solid #dcdcde;
+		border-left: 0;
+	}
+
+	.wc3d-media-modal .attachments {
+		grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+		gap: 10px;
+	}
+}

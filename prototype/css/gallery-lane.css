@@ -1,0 +1,139 @@
+/* gallery-lane: the strip stays on the bottom row, centred on the canvas when
+   that clears the stack and fullscreen button, else pushed into the free lane.
+   Edges come from useGalleryLane(); !important beats the width lifts in viewer.css. */
+.wc3d-canvas-container[data-wc3d-gallery="row"] > .wc3d-gallery-row {
+	--wc3d-lane: calc(100cqi - var(--wc3d-lane-left) - var(--wc3d-lane-right));
+	--wc3d-gap: clamp(6px, (var(--wc3d-lane) - 224px) / 3, 10px);
+	--wc3d-thumb: clamp(32px, (var(--wc3d-lane) - 3 * var(--wc3d-gap)) / 4, 56px);
+	--wc3d-strip: calc(4 * var(--wc3d-thumb) + 3 * var(--wc3d-gap));
+	top: auto !important;
+	right: auto !important;
+	bottom: 10px !important;
+	left: clamp(var(--wc3d-lane-left), 50cqi - var(--wc3d-strip) / 2, 100cqi - var(--wc3d-lane-right) - var(--wc3d-strip)) !important;
+	flex-direction: row !important;
+	gap: var(--wc3d-gap) !important;
+	transform: none !important;
+}
+
+.wc3d-canvas-container[data-wc3d-gallery="row"] > .wc3d-gallery-row > .wc3d-gallery-thumb {
+	width: var(--wc3d-thumb) !important;
+	height: var(--wc3d-thumb) !important;
+}
+
+/* No room for a row: a column above the fullscreen button. */
+.wc3d-canvas-container[data-wc3d-gallery="column"] > .wc3d-gallery-row {
+	top: auto !important;
+	left: auto !important;
+	right: 10px !important;
+	bottom: var(--wc3d-lane-bottom) !important;
+	flex-direction: column !important;
+	gap: 6px !important;
+	transform: none !important;
+}
+
+.wc3d-canvas-container[data-wc3d-gallery="column"] > .wc3d-gallery-row > .wc3d-gallery-thumb {
+	width: 36px !important;
+	height: 36px !important;
+}
+
+.wc3d-canvas-container[data-wc3d-gallery="none"] > .wc3d-gallery-row {
+	display: none !important;
+}
+
+/* Compare page (#proto.gallery-lane), prototype only. */
+.proto-lane {
+	min-height: 100vh;
+	background: #f6f7f9;
+	color: #1e293b;
+	font: 14px/1.5 "wc3d Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.proto-lane__inner {
+	max-width: 1520px;
+	margin: 0 auto;
+	padding: 28px 16px 64px;
+}
+
+.proto-lane h1 {
+	margin: 4px 0 6px;
+	font-size: 24px;
+	line-height: 1.25;
+}
+
+.proto-lane__lead {
+	max-width: 760px;
+	margin: 0 0 18px;
+	color: #475569;
+}
+
+.proto-lane__controls {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 24px;
+	align-items: center;
+	margin-bottom: 24px;
+}
+
+.proto-lane__group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+}
+
+.proto-lane__label {
+	margin-right: 4px;
+	font-weight: 600;
+	color: #334155;
+}
+
+.proto-lane__chip {
+	padding: 4px 10px;
+	border: 1px solid #cbd5e1;
+	border-radius: 999px;
+	background: #fff;
+	color: #334155;
+	font: inherit;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.proto-lane__chip[aria-pressed="true"] {
+	border-color: #4f46e5;
+	background: #4f46e5;
+	color: #fff;
+}
+
+.proto-lane__row {
+	margin-bottom: 32px;
+}
+
+.proto-lane__row h2 {
+	margin: 0 0 10px;
+	font-size: 15px;
+}
+
+.proto-lane__pair {
+	display: flex;
+	gap: 20px;
+	overflow-x: auto;
+	padding-bottom: 6px;
+}
+
+.proto-lane__figure {
+	flex: none;
+	margin: 0;
+}
+
+.proto-lane__figure figcaption {
+	margin-bottom: 6px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #64748b;
+}
+
+.proto-lane__figure--new figcaption {
+	color: #4f46e5;
+}

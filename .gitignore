@@ -1,0 +1,49 @@
+# --- Video ---
+*.mp4
+*.m4v
+*.mov
+*.avi
+*.mkv
+*.webm
+*.wmv
+*.flv
+*.mpg
+*.mpeg
+*.ogv
+*.prores
+
+# --- Audio ---
+*.mp3
+*.wav
+*.aac
+*.m4a
+*.flac
+*.ogg
+*.oga
+*.opus
+*.wma
+*.aiff
+*.aif
+
+# --- OS / editor cruft ---
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+*.swp
+
+# --- Dependencies / build output ---
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.local
+
+# --- Excluded content folders (kept local, not versioned) ---
+/videos/
+/tutorials/
+/tutorials-site/
+/video-series/

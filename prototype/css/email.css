@@ -1,0 +1,386 @@
+/* WooCommerce email preview (emails/email-styles.php look). */
+
+/* ── Prototype mail client frame ──────────────────────────────── */
+.wc-proto-email {
+	background: #e9eaec;
+	padding: 24px 16px 40px;
+	box-sizing: border-box;
+	min-width: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	color: #1d2327;
+}
+
+.wc-proto-email *,
+.wc-proto-email *::before,
+.wc-proto-email *::after {
+	box-sizing: border-box;
+}
+
+.wc-proto-email__client {
+	max-width: 760px;
+	margin: 0 auto;
+	background: #fff;
+	border: 1px solid #d6d8dc;
+	border-radius: 10px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	overflow: hidden;
+}
+
+.wc-proto-email__missing {
+	padding: 32px 24px;
+	text-align: center;
+}
+
+.wc-proto-email__missing p {
+	margin: 0;
+}
+
+.wc-proto-email__bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+	padding: 10px 16px;
+	border-bottom: 1px solid #e4e5e8;
+	background: #f6f7f8;
+	font-size: 13px;
+}
+
+.wc-proto-email__tabs {
+	display: inline-flex;
+	padding: 3px;
+	gap: 2px;
+	border-radius: 8px;
+	background: #e6e7ea;
+}
+
+.wc-proto-email__tab {
+	padding: 5px 12px;
+	border-radius: 6px;
+	color: #50575e;
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.wc-proto-email__tab:hover {
+	color: #1d2327;
+}
+
+.wc-proto-email__tab.is-active {
+	background: #fff;
+	color: #1d2327;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.wc-proto-email__links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 14px;
+}
+
+.wc-proto-email__links a {
+	color: #2271b1;
+	text-decoration: none;
+}
+
+.wc-proto-email__links a:hover {
+	text-decoration: underline;
+}
+
+.wc-proto-email__head {
+	padding: 18px 20px 14px;
+	border-bottom: 1px solid #e4e5e8;
+}
+
+.wc-proto-email__subject {
+	margin: 0 0 10px;
+	font-size: 19px;
+	font-weight: 600;
+	line-height: 1.35;
+	overflow-wrap: anywhere;
+}
+
+.wc-proto-email__fields {
+	margin: 0;
+	display: grid;
+	gap: 3px;
+	font-size: 13px;
+}
+
+.wc-proto-email__fields > div {
+	display: flex;
+	gap: 8px;
+	min-width: 0;
+}
+
+.wc-proto-email__fields dt {
+	flex: 0 0 40px;
+	color: #787c82;
+}
+
+.wc-proto-email__fields dd {
+	margin: 0;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.wc-proto-email__fields dd span {
+	color: #787c82;
+}
+
+.wc-proto-email__view {
+	background: #f7f7f7;
+}
+
+/* ── WooCommerce email template (base #720eec, bg #f7f7f7, body #fff, text #3c3c3c) ── */
+.wc-email-wrapper {
+	background: #f7f7f7;
+	margin: 0;
+	padding: 70px 0;
+	width: 100%;
+	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+	-webkit-text-size-adjust: none;
+}
+
+.wc-email-container {
+	width: 600px;
+	max-width: 100%;
+	margin: 0 auto;
+	background: #fff;
+	border: 1px solid #dedede;
+	border-radius: 3px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wc-email-header {
+	background: #720eec;
+	border-radius: 3px 3px 0 0;
+	color: #fff;
+	padding: 36px 48px;
+}
+
+.wc-email-header h1 {
+	margin: 0;
+	color: #fff;
+	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+	font-size: 30px;
+	font-weight: 300;
+	line-height: 150%;
+	text-align: left;
+	text-shadow: 0 1px 0 #8e3ef0;
+	overflow-wrap: anywhere;
+}
+
+.wc-email-body {
+	padding: 48px 48px 32px;
+	color: #636363;
+	font-size: 14px;
+	line-height: 150%;
+	text-align: left;
+}
+
+.wc-email-body p {
+	margin: 0 0 16px;
+}
+
+.wc-email-body h2 {
+	display: block;
+	margin: 0 0 18px;
+	color: #720eec;
+	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 130%;
+	text-align: left;
+}
+
+.wc-email-body a {
+	color: #720eec;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+.wc-email-body h2 a.link {
+	color: #720eec;
+	font-weight: bold;
+}
+
+.wc-email-order {
+	margin-bottom: 40px;
+}
+
+.wc-email-order table.td {
+	width: 100%;
+	border: 1px solid #e5e5e5;
+	border-collapse: collapse;
+	color: #636363;
+	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+	table-layout: auto;
+}
+
+.wc-email-order .td {
+	border: 1px solid #e5e5e5;
+	padding: 12px;
+	color: #636363;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.wc-email-order thead .td {
+	font-weight: bold;
+}
+
+.wc-email-order tfoot th.td {
+	font-weight: bold;
+}
+
+.wc-email-order tfoot .wc-email-first .td {
+	border-top-width: 4px;
+}
+
+.wc-email-item {
+	overflow-wrap: anywhere;
+	word-wrap: break-word;
+}
+
+.wc-email-qty,
+.wc-email-price {
+	white-space: nowrap;
+}
+
+.wc-email-item__image {
+	margin-bottom: 5px;
+}
+
+.wc-email-item__image img {
+	display: block;
+	width: 64px;
+	height: 64px;
+	margin-right: 10px;
+	border-radius: 2px;
+	vertical-align: middle;
+}
+
+.wc-email-order .wc-item-meta {
+	margin: 1em 0 0;
+	padding: 0;
+	list-style: none;
+	font-size: small;
+}
+
+.wc-email-order .wc-item-meta li {
+	margin: 0.5em 0 0;
+	padding: 0;
+}
+
+.wc-email-order .wc-item-meta li p {
+	margin: 0;
+}
+
+/* wc_display_item_meta() email label style: float left, .25em gap. */
+.wc-email-order .wc-item-meta-label {
+	float: left;
+	margin-right: 0.25em;
+	clear: both;
+}
+
+.wc-email-order del {
+	color: #a3a3a3;
+}
+
+.wc-email-addresses {
+	width: 100%;
+	margin-bottom: 40px;
+	padding: 0;
+	border-collapse: collapse;
+	vertical-align: top;
+}
+
+.wc-email-addresses__col {
+	width: 50%;
+	padding: 0;
+	border: 0;
+	text-align: left;
+	vertical-align: top;
+}
+
+.wc-email-addresses__col + .wc-email-addresses__col {
+	padding-left: 12px;
+}
+
+.wc-email-body .address {
+	padding: 12px;
+	border: 1px solid #e5e5e5;
+	color: #636363;
+	font-style: normal;
+	overflow-wrap: anywhere;
+}
+
+.wc-email-footer {
+	width: 600px;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.wc-email-footer #credit {
+	margin: 0;
+	padding: 24px 0;
+	border: 0;
+	color: #8a8a8a;
+	font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 150%;
+	text-align: center;
+}
+
+.wc-email-footer #credit a {
+	color: #8a8a8a;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+/* email-styles.php @media (max-width: 600px). */
+@media (max-width: 600px) {
+	.wc-proto-email {
+		padding: 12px 8px 24px;
+	}
+
+	.wc-proto-email__head {
+		padding: 14px 14px 12px;
+	}
+
+	.wc-proto-email__bar {
+		padding: 8px 10px;
+	}
+
+	.wc-email-wrapper {
+		padding: 24px 0;
+	}
+
+	.wc-email-header {
+		padding: 27px 24px;
+	}
+
+	.wc-email-header h1 {
+		font-size: 24px;
+	}
+
+	.wc-email-body {
+		padding: 24px 16px 16px;
+	}
+
+	.wc-email-order .td {
+		padding: 8px;
+	}
+
+	.wc-email-addresses__col {
+		display: block;
+		width: 100%;
+	}
+
+	.wc-email-addresses__col + .wc-email-addresses__col {
+		padding: 16px 0 0;
+	}
+}

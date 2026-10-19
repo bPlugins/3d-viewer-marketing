@@ -1,0 +1,107 @@
+/* hdri-download: Settings → Scene & Performance → Lighting Presets (settings-hdri.js), prototype bar switch. */
+.wc3d-ui .wc3d-hdri-body {
+	flex: 1 0 100%;
+	min-width: 0;
+	padding-inline-start: 58px;
+}
+
+.wc3d-ui .wc3d-hdri-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 0 24px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.wc3d-ui .wc3d-hdri-list__item {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 0 12px;
+	margin: 0;
+	padding: 9px 0;
+	border-bottom: 1px solid var(--wc3d-ui-rule);
+}
+
+.wc3d-ui .wc3d-hdri-list__name {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--wc3d-ui-title);
+}
+
+.wc3d-ui .wc3d-hdri-list__file {
+	grid-column: 1;
+	font-size: 12px;
+	color: var(--wc3d-ui-muted);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.wc3d-ui .wc3d-hdri-list__item > .wc3d-badge,
+.wc3d-ui .wc3d-hdri-list__status {
+	grid-column: 2;
+	grid-row: 1 / span 2;
+	justify-self: end;
+}
+
+.wc3d-ui .wc3d-hdri-list__status {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.wc3d-ui .wc3d-hdri-help {
+	margin-top: 12px;
+	font-size: 13px;
+}
+
+.wc3d-ui .wc3d-hdri-result {
+	margin-top: 10px;
+}
+
+.wc3d-ui .wc3d-hdri-result__line {
+	margin: 4px 0 0;
+	padding: 8px 12px;
+	border-radius: var(--wc3d-ui-radius-inner);
+	font-size: 13px;
+	line-height: 18px;
+	background: var(--wc3d-ui-strip);
+	color: var(--wc3d-ui-notice-text);
+}
+
+.wc3d-ui .wc3d-hdri-result__line.is-success {
+	background: var(--wc3d-ui-success-bg);
+	color: var(--wc3d-ui-success-fg);
+}
+
+.wc3d-ui .wc3d-hdri-result__line.is-error {
+	background: var(--wc3d-ui-danger-bg);
+	color: var(--wc3d-ui-danger-fg);
+}
+
+@media screen and (max-width: 782px) {
+
+	.wc3d-ui .wc3d-hdri-body {
+		padding-inline-start: 0;
+	}
+
+	.wc3d-ui .wc3d-hdri-list {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.proto-hdri-fail {
+	display: inline-flex;
+	align-items: center;
+	gap: 0;
+	padding-left: 8px;
+	color: var(--proto-bar-fg);
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.proto-hdri-fail input {
+	margin: 0;
+}

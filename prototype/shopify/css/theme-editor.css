@@ -1,0 +1,92 @@
+/* Theme editor (Online Store › Customize) mock: top bar, sections sidebar, scaled live preview, block settings. */
+.te { --te-line: #e3e3e3; --te-muted: #616161; --te-bg: #f1f1f1; --te-top: 52px; display: flex; flex-direction: column; height: calc(100vh - var(--pb-total, 76px)); min-height: 560px; background: var(--te-bg); font-family: var(--font-ui); font-size: 13px; color: #303030; }
+.te-top { display: flex; align-items: center; gap: 12px; min-height: var(--te-top); padding: 8px max(12px, env(safe-area-inset-right, 0px)) 8px max(12px, env(safe-area-inset-left, 0px)); background: #fff; border-bottom: 1px solid var(--te-line); flex-wrap: wrap; }
+.te-top__exit { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; color: #303030; }
+.te-top__exit:hover { background: #f1f1f1; }
+.te-top__theme { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.te-live { font-size: 11.5px; font-weight: 600; color: #0c5132; background: #cdfee1; border-radius: 8px; padding: 1px 8px; }
+.te-top__tpl { flex: 0 1 280px; min-width: 0; margin-inline: auto; }
+.te-top__tpl .p-field { gap: 0; }
+.te-top__right { display: flex; align-items: center; gap: 10px; }
+.te-seg { display: inline-flex; background: #f1f1f1; border-radius: 9px; padding: 2px; }
+.te-seg button { border: 0; background: transparent; width: 34px; height: 30px; border-radius: 7px; display: grid; place-items: center; cursor: pointer; color: #616161; }
+.te-seg button.is-on { background: #fff; color: #303030; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.te-save { border: 0; border-radius: 8px; min-height: 32px; padding: 6px 16px; font-weight: 600; font-size: 13px; color: #fff; background: linear-gradient(#3a3a3a, #262626); cursor: pointer; box-shadow: 0 -1px 0 1px rgba(0,0,0,.8) inset, 0 0 0 1px #303030 inset; }
+.te-save:disabled { background: #e3e3e3; color: #a3a3a3; box-shadow: none; cursor: default; }
+
+.te-body { flex: 1; min-height: 0; display: grid; grid-template-columns: 290px minmax(0, 1fr) 310px; }
+.te-side, .te-settings { background: #fff; overflow-y: auto; min-height: 0; }
+.te-side { border-right: 1px solid var(--te-line); display: flex; flex-direction: column; }
+.te-settings { border-left: 1px solid var(--te-line); padding: 16px; display: grid; gap: 14px; align-content: start; }
+.te-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--te-line); }
+.te-tabs button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 0; background: transparent; padding: 12px 8px; font: 600 12.5px var(--font-ui); color: #616161; cursor: pointer; border-bottom: 2px solid transparent; }
+.te-tabs button.is-on { color: #303030; border-bottom-color: #303030; }
+.te-dot { width: 7px; height: 7px; border-radius: 50%; background: #29845a; }
+.te-tree { padding: 8px 8px 12px; display: grid; gap: 1px; }
+.te-group { margin: 12px 8px 4px; font-size: 11.5px; font-weight: 650; color: var(--te-muted); text-transform: none; }
+.te-row { display: flex; align-items: center; border-radius: 8px; position: relative; }
+.te-row:hover { background: #f6f6f6; }
+.te-row.is-on { background: #ebebeb; }
+.te-row--block { margin-left: 18px; }
+.te-row__btn { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; border: 0; background: transparent; padding: 8px 10px; font: 500 13px var(--font-ui); color: #303030; cursor: pointer; text-align: left; border-radius: 8px; }
+.te-row__btn span:first-of-type { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.te-row--app .te-row__btn .p-icon { color: #5b4bd6; }
+.te-row__app { font-size: 10.5px; font-weight: 650; color: #5b4bd6; background: #f0eeff; border-radius: 6px; padding: 0 6px; flex: none !important; }
+.te-row__x { border: 0; background: transparent; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 7px; color: #8a8a8a; cursor: pointer; flex: none; }
+.te-row__x:hover { background: #fedad9; color: #8e1f0b; }
+.te-add { position: relative; margin: 2px 0 6px 18px; }
+.te-add__btn { display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: #005bd3; font: 600 13px var(--font-ui); padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+.te-add__btn:hover { background: #f0f6ff; }
+.te-pop { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 20; background: #fff; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.18), 0 0 0 1px rgba(0,0,0,.06); padding: 6px; display: grid; gap: 1px; }
+.te-pop__label { margin: 8px 8px 4px; font-size: 11.5px; font-weight: 650; color: var(--te-muted); }
+.te-pop__item { display: flex; align-items: center; gap: 10px; border: 0; background: transparent; padding: 8px 10px; border-radius: 8px; font: 500 13px var(--font-ui); text-align: left; cursor: pointer; color: #303030; }
+.te-pop__item:hover:not(:disabled) { background: #f1f1f1; }
+.te-pop__item:disabled { opacity: .5; cursor: default; }
+.te-pop__item span { display: grid; }
+.te-pop__item small { color: var(--te-muted); font-size: 11.5px; font-weight: 400; }
+.te-pop__item .p-icon { color: #5b4bd6; flex: none; }
+.te-embeds { padding: 14px; display: grid; gap: 12px; }
+.te-embed { border: 1px solid var(--te-line); border-radius: 12px; padding: 12px; display: grid; gap: 12px; }
+.te-embed__head, .te-settings__head { display: flex; align-items: center; gap: 10px; }
+.te-embed__head div, .te-settings__head div { display: grid; }
+.te-embed__head small, .te-settings__head small { color: var(--te-muted); font-size: 12px; }
+.te-embed__icon { width: 32px; height: 32px; border-radius: 8px; background: #f0eeff; color: #5b4bd6; display: grid; place-items: center; flex: none; }
+.te-embed__icon--theme { background: #f1f1f1; color: #616161; }
+.te-info { margin: auto 12px 12px; display: flex; gap: 8px; align-items: flex-start; background: #f0f6ff; color: #00527c; border-radius: 10px; padding: 10px 12px; font-size: 12.5px; }
+.te-info .p-icon { flex: none; margin-top: 1px; }
+.te-info p { margin: 0; }
+.te-settings__text { margin: 0; color: var(--te-muted); }
+.te-settings__empty { display: grid; justify-items: center; text-align: center; gap: 8px; padding: 40px 12px; color: var(--te-muted); }
+.te-form { display: grid; gap: 16px; }
+.te-fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
+.te-remove { justify-self: start; display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: #8e1f0b; font: 600 13px var(--font-ui); padding: 8px 4px; cursor: pointer; }
+.te-remove:hover { text-decoration: underline; }
+
+.te-preview { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.te-preview__bar { display: flex; align-items: center; gap: 8px; padding: 8px 16px; }
+.te-preview__label { font-weight: 600; color: var(--te-muted); }
+.te-preview__select { min-width: 0; max-width: 220px; }
+.te-preview__select select { min-height: 30px; padding-block: 4px; }
+.te-preview__scale { margin-left: auto; color: var(--te-muted); font-variant-numeric: tabular-nums; }
+.te-pane { flex: 1; min-height: 0; overflow: auto; padding: 0 16px 16px; }
+.te-sizer { margin-inline: auto; overflow: hidden; border-radius: 10px; box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.08); background: #fff; }
+.te-sizer.is-mobile { border-radius: 22px; box-shadow: 0 0 0 8px #1c1f23, 0 12px 32px rgba(0,0,0,.2); margin-block: 8px; }
+.te-frame { transform-origin: 0 0; }
+.te-frame .sf { min-height: 0; }
+
+@media (max-width: 1100px) {
+	.te-body { grid-template-columns: 260px minmax(0, 1fr); }
+	.te-settings { grid-column: 1; grid-row: 2; border-left: 0; border-top: 1px solid var(--te-line); border-right: 1px solid var(--te-line); }
+	.te-side { grid-row: 1; }
+	.te-preview { grid-column: 2; grid-row: 1 / span 2; }
+}
+@media (max-width: 760px) {
+	.te { height: auto; }
+	.te-body { display: flex; flex-direction: column; }
+	.te-side, .te-settings { border: 0; border-bottom: 1px solid var(--te-line); overflow: visible; }
+	.te-info { margin-top: 8px; }
+	.te-top__tpl { order: 3; flex: 1 1 100%; margin: 0; }
+	.te-top__right { margin-left: auto; }
+	.te-pane { overflow: hidden; padding: 0 12px 16px; }
+	.te-preview { order: -1; }
+}

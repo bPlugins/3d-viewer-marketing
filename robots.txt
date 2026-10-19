@@ -1,0 +1,13 @@
+# Internal marketing / prototype material — not for public search listing.
+User-agent: *
+Disallow: /
+
+# Explicitly name the big crawlers so there is no ambiguity.
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Googlebot-Image
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /

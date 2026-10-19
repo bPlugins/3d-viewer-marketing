@@ -1,0 +1,49 @@
+/* Planned (conditional-logic): drawer groups and choices that appear as conditions change. */
+.wc3d-sr-only {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.wc3d-cl-anim {
+	animation: wc3d-cl-in 0.18s ease-out;
+}
+
+.wc3d-cl-anim :is([role="radio"], .wc3d-customer-drawer__swatch) {
+	animation: wc3d-cl-fade 0.18s ease-out;
+}
+
+.wc3d-customer-drawer__group-note.wc3d-cl-note {
+	margin-top: 0;
+	padding: 6px 8px;
+	border-radius: 6px;
+	background: #fef3c7;
+	color: #78350f;
+	font-weight: 500;
+}
+
+@keyframes wc3d-cl-in {
+	from {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+}
+
+@keyframes wc3d-cl-fade {
+	from {
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wc3d-cl-anim,
+	.wc3d-cl-anim :is([role="radio"], .wc3d-customer-drawer__swatch) {
+		animation: none;
+	}
+}

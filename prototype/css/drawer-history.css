@@ -1,0 +1,75 @@
+/* Planned (undo-redo-drawer): Undo / Redo next to Reset Customizations */
+.wc3d-customer-drawer__footer--history {
+	display: grid;
+	grid-template-columns: auto auto minmax(0, 1fr);
+	grid-auto-flow: row dense;
+	gap: 6px;
+	align-items: stretch;
+}
+
+/* Anything else in the footer (options total, other features) keeps a full row. */
+.wc3d-customer-drawer__footer--history > :not(.wc3d-customer-drawer__history-btn, .wc3d-customer-drawer__reset-btn, .wc3d-customer-drawer__history-live) {
+	grid-column: 1 / -1;
+}
+
+.wc3d-customer-drawer__footer--history .wc3d-customer-drawer__options-total {
+	margin-bottom: 4px;
+}
+
+.wc3d-customer-drawer__footer--history .wc3d-customer-drawer__reset-btn {
+	width: auto;
+	min-width: 0;
+	margin: 0 !important;
+}
+
+.wc3d-customer-drawer__history-btn {
+	width: 34px;
+	min-height: 32px;
+	padding: 0 !important;
+	margin: 0 !important;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #cbd5e1 !important;
+	border-radius: 6px !important;
+	background: #fff !important;
+	color: #475569 !important;
+	box-shadow: none !important;
+	cursor: pointer;
+	transition: all 0.15s;
+}
+
+.wc3d-customer-drawer__history-btn:hover:not([aria-disabled="true"]) {
+	background: #f8fafc !important;
+	border-color: #94a3b8 !important;
+	color: #1e293b !important;
+}
+
+.wc3d-customer-drawer__history-btn[aria-disabled="true"] {
+	color: #cbd5e1 !important;
+	border-color: #e2e8f0 !important;
+	cursor: default;
+}
+
+.wc3d-customer-drawer__history-btn:focus {
+	outline: none;
+}
+
+.wc3d-customer-drawer__history-btn:focus-visible {
+	outline: 2px solid #6366f1 !important;
+	outline-offset: 2px !important;
+}
+
+.wc3d-customer-drawer__history-live {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	white-space: nowrap;
+}
+
+/* The wrapper takes focus on canvas clicks (for the shortcuts); no ring for that. */
+.wc3d-viewer-wrapper[data-wc3d-history]:focus {
+	outline: none;
+}

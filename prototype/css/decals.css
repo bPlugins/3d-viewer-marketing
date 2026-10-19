@@ -1,0 +1,263 @@
+/* Personalization (flag decals): drawer "Personalize" section and the image row in cart/order item data. */
+
+.wc3d-decal {
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.7);
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.wc3d-decal.is-active {
+	border-color: #a5b4fc;
+	box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25);
+}
+
+.wc3d-decal .wc3d-customer-drawer__item-label {
+	gap: 8px;
+}
+
+.wc3d-decal__head-end {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	flex-shrink: 0;
+}
+
+.wc3d-decal__head-end .wc3d-customer-drawer__price {
+	flex-direction: row;
+	gap: 3px;
+}
+
+.wc3d-decal__kinds {
+	margin-bottom: 8px;
+}
+
+.wc3d-decal__fields {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.wc3d-decal__text {
+	position: relative;
+}
+
+.wc3d-decal__input {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	min-height: 34px;
+	padding: 6px 48px 6px 8px;
+	margin: 0;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	background: #fff;
+	color: #1e293b;
+	font-size: 13px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	box-sizing: border-box;
+	box-shadow: none;
+}
+
+.wc3d-decal__input:focus {
+	outline: none;
+	border-color: #6366f1;
+	box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+.wc3d-decal__counter {
+	position: absolute;
+	top: 50%;
+	right: 8px;
+	transform: translateY(-50%);
+	font-size: 11px;
+	font-variant-numeric: tabular-nums;
+	color: #64748b;
+	pointer-events: none;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-decal__counter.is-full {
+	color: #dc2626;
+}
+
+.wc3d-decal__label {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 11.5px;
+	font-weight: 600;
+	color: #475569;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-decal__upload {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	width: 100%;
+	min-height: 34px;
+	padding: 6px 12px;
+	border: 1px dashed #94a3b8;
+	border-radius: 6px;
+	background: #fff;
+	color: #334155;
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.wc3d-decal__upload:hover,
+.wc3d-decal__upload:focus-within {
+	border-color: #6366f1;
+	color: #3730a3;
+}
+
+.wc3d-decal__upload:focus-within {
+	box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+}
+
+.wc3d-decal__file-input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	border: 0;
+	opacity: 0;
+}
+
+.wc3d-decal__help {
+	margin: 0;
+	font-size: 11px;
+	line-height: 1.4;
+	color: #64748b;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-decal__error {
+	margin: 0;
+	font-size: 11.5px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: #b91c1c;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-decal__file {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+}
+
+.wc3d-decal__file-img,
+.wc3d-decal-thumb {
+	flex-shrink: 0;
+	object-fit: contain;
+	border: 1px solid #e2e8f0;
+	border-radius: 4px;
+	background: repeating-conic-gradient(#e2e8f0 0 25%, #fff 0 50%) 50% / 8px 8px;
+}
+
+.wc3d-decal__file-img {
+	width: 36px;
+	height: 36px;
+}
+
+.wc3d-decal__file-name {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 12px;
+	color: #334155;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-decal__link {
+	flex-shrink: 0;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+	background: none !important;
+	box-shadow: none !important;
+	color: #4f46e5 !important;
+	font-size: 11.5px !important;
+	font-weight: 600 !important;
+	line-height: 1.4 !important;
+	text-decoration: underline;
+	text-transform: none !important;
+	cursor: pointer;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-decal__link:disabled {
+	color: #94a3b8 !important;
+	text-decoration: none;
+	cursor: default;
+}
+
+.wc3d-decal__adjust {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-top: 10px;
+	padding-top: 8px;
+	border-top: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.wc3d-decal__range {
+	display: grid;
+	grid-template-columns: 68px minmax(0, 1fr) 40px;
+	align-items: center;
+	gap: 6px;
+}
+
+.wc3d-decal__range-label {
+	font-size: 11.5px;
+	font-weight: 600;
+	color: #475569;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-decal__range input[type="range"] {
+	width: 100%;
+	min-width: 0;
+	margin: 0;
+	accent-color: #6366f1;
+}
+
+.wc3d-decal__range-value {
+	font-size: 11px;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+	color: #64748b;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-decal__adjust-foot {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+/* Cart, checkout, order and email item data: picture before the file name. */
+.wc3d-decal-thumb {
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	margin: 0 6px 0 0;
+	vertical-align: middle;
+}

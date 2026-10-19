@@ -1,0 +1,13 @@
+{
+	"name": "3d-viewer-prototype",
+	"private": true,
+	"description": "Clickable prototypes: WC 3D configurator (index.html), Shopify app (shopify.html) and the 3D Viewer live demo (live-demo.html).",
+	"scripts": {
+		"start": "node scripts/serve.js",
+		"live-demo:build": "node scripts/build-live-demo.mjs",
+		"live-demo:smoke": "node scripts/live-demo-smoke.mjs"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.60.0"
+	}
+}

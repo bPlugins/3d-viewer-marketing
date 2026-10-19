@@ -1,0 +1,478 @@
+/*
+ * Prototype frame + the plugin's shared admin tokens.
+ * The product's admin screens are light-only (the editor has its own dark
+ * toggle), so the prototype deliberately renders one light world.
+ */
+
+@font-face {
+	font-family: "wc3d Inter";
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+	src: url(../fonts/inter-latin.woff2) format("woff2");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: "wc3d Inter";
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+	src: url(../fonts/inter-latin-ext.woff2) format("woff2");
+	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Prototype chrome only (the bar above every screen). */
+:root {
+	color-scheme: light;
+	--proto-bar-h: 44px;
+	--proto-bar-bg: #18181b;
+	--proto-bar-fg: #e4e4e7;
+	--proto-bar-dim: #a1a1aa;
+	--proto-bar-line: #3f3f46;
+	--proto-bar-accent: #facc15;
+	--proto-page: #f0f0f1;
+
+	/* src/admin/shared/tokens.css (PHP screens) */
+	--wc3d-primary: #146ef5;
+	--wc3d-primary-hover: #0a5cd6;
+	--wc3d-primary-light: #dbe7fe;
+	--wc3d-primary-rgb: 20, 110, 245;
+	--wc3d-slate-50: #f8fafc;
+	--wc3d-slate-100: #f1f5f9;
+	--wc3d-slate-200: #e2e8f0;
+	--wc3d-slate-300: #cbd5e1;
+	--wc3d-slate-600: #475569;
+	--wc3d-slate-700: #334155;
+	--wc3d-slate-800: #1e293b;
+	--wc3d-slate-900: #0f172a;
+	--wc3d-border-radius: 12px;
+	--wc3d-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	--wc3d-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+	--wc3d-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+	--wc3d-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	--wc3d-focus-ring: 0 0 0 3px rgba(20, 110, 245, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root { --wc3d-transition: none; }
+}
+
+/* src/admin/shared/ui.css tokens, verbatim. */
+.wc3d-ui,
+.wc3d-app {
+	--wc3d-ui-font: "wc3d Inter", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, sans-serif;
+	--wc3d-ui-mono: ui-monospace, sfmono-regular, menlo, consolas, monospace;
+	--wc3d-ui-bg: #f8f9fa;
+	--wc3d-ui-card: #fff;
+	--wc3d-ui-tile: #f8fafc;
+	--wc3d-ui-field: #f3f4f6;
+	--wc3d-ui-strip: #f5f8ff;
+	--wc3d-ui-info-bg: #eff6ff;
+	--wc3d-ui-soft-hover: #e0ecfe;
+	--wc3d-ui-border: #e5e7eb;
+	--wc3d-ui-border-strong: #cbd5e1;
+	--wc3d-ui-rule: #f1f3f5;
+	--wc3d-ui-track: #e2e8f0;
+	--wc3d-ui-primary: #1b5cf0;
+	--wc3d-ui-primary-hover: #1450d8;
+	--wc3d-ui-primary-fill: #1b5cf0;
+	--wc3d-ui-save: #3b52f6;
+	--wc3d-ui-save-hover: #2f45e0;
+	--wc3d-ui-slider: #2563eb;
+	--wc3d-ui-heading: #0f172a;
+	--wc3d-ui-title: #24242b;
+	--wc3d-ui-text-2: #4b5563;
+	--wc3d-ui-desc: #6b7280;
+	--wc3d-ui-muted: #919195;
+	--wc3d-ui-placeholder: #6b7280;
+	--wc3d-ui-search-placeholder: #4f6fd1;
+	--wc3d-ui-notice-text: #374151;
+	--wc3d-ui-on: #10b981;
+	--wc3d-ui-off: #ef4444;
+	--wc3d-ui-off-soft: #fda4af;
+	--wc3d-ui-on-text: #047857;
+	--wc3d-ui-off-text: #dc2626;
+	--wc3d-ui-check: #00bf7c;
+	--wc3d-ui-ready-bg: #e8faf4;
+	--wc3d-ui-ready-fg: #047857;
+	--wc3d-ui-success-bg: #e5fff1;
+	--wc3d-ui-success-fg: #047857;
+	--wc3d-ui-warn-bg: #fef3c7;
+	--wc3d-ui-warn-fg: #92400e;
+	--wc3d-ui-danger-bg: #fcdddd;
+	--wc3d-ui-danger-fg: #b91c1c;
+	--wc3d-ui-radius: 10px;
+	--wc3d-ui-radius-control: 8px;
+	--wc3d-ui-radius-inner: 6px;
+	--wc3d-ui-control-h: 40px;
+	--wc3d-ui-gutter: 48px;
+	--wc3d-ui-shadow-pop: 0 12px 32px rgba(15, 23, 42, 0.12);
+	--wc3d-ui-shadow-raised: 0 1px 6px rgba(15, 23, 42, 0.06);
+}
+
+.wc3d-app.dark {
+	--wc3d-ui-bg: #030712;
+	--wc3d-ui-card: #111827;
+	--wc3d-ui-tile: #1f2937;
+	--wc3d-ui-field: #1f2937;
+	--wc3d-ui-strip: rgba(77, 127, 245, 0.12);
+	--wc3d-ui-info-bg: rgba(77, 127, 245, 0.16);
+	--wc3d-ui-soft-hover: rgba(77, 127, 245, 0.26);
+	--wc3d-ui-border: #1f2937;
+	--wc3d-ui-border-strong: #374151;
+	--wc3d-ui-rule: #1f2937;
+	--wc3d-ui-track: #374151;
+	--wc3d-ui-primary: #4d7ff5;
+	--wc3d-ui-primary-hover: #6b95f7;
+	--wc3d-ui-primary-fill: #2f5fe6;
+	--wc3d-ui-save: #4d63f7;
+	--wc3d-ui-save-hover: #6577f8;
+	--wc3d-ui-slider: #4d7ff5;
+	--wc3d-ui-heading: #f9fafb;
+	--wc3d-ui-title: #f3f4f6;
+	--wc3d-ui-text-2: #d1d5db;
+	--wc3d-ui-desc: #9ca3af;
+	--wc3d-ui-muted: #9ca3af;
+	--wc3d-ui-placeholder: #9ca3af;
+	--wc3d-ui-search-placeholder: #9ca3af;
+	--wc3d-ui-on-text: #34d399;
+	--wc3d-ui-off-text: #f87171;
+	--wc3d-ui-notice-text: #d1d5db;
+	--wc3d-ui-ready-bg: rgba(16, 185, 129, 0.14);
+	--wc3d-ui-ready-fg: #34d399;
+	--wc3d-ui-success-bg: rgba(16, 185, 129, 0.14);
+	--wc3d-ui-success-fg: #34d399;
+	--wc3d-ui-warn-bg: rgba(245, 158, 11, 0.14);
+	--wc3d-ui-warn-fg: #fbbf24;
+	--wc3d-ui-danger-bg: rgba(239, 68, 68, 0.14);
+	--wc3d-ui-danger-fg: #f87171;
+	--wc3d-ui-shadow-pop: 0 12px 32px rgba(0, 0, 0, 0.45);
+	--wc3d-ui-shadow-raised: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	background: var(--proto-page);
+	color: #1d2327;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+#proto-app {
+	min-height: 100%;
+}
+
+#proto-app:has(> .proto-root--full) {
+	height: 100%;
+}
+
+/* Plugin modals (z-index 99999) must cover the prototype bar. */
+body.wc3d-modal-open .proto-bar {
+	z-index: 0;
+}
+
+.proto-root {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.proto-root--full {
+	height: 100%;
+	overflow: hidden;
+}
+
+.proto-stage {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.proto-stage > * {
+	flex: 1;
+	min-height: 0;
+}
+
+/* ── Prototype bar ─────────────────────────────────────────────── */
+.proto-bar {
+	position: sticky;
+	top: env(safe-area-inset-top, 0px);
+	z-index: 100000;
+	min-height: var(--proto-bar-h);
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px 12px;
+	padding-inline: 16px;
+	padding-block: 6px;
+	box-sizing: border-box;
+	background: var(--proto-bar-bg);
+	color: var(--proto-bar-fg);
+	font: 500 12px/1.2 "wc3d Inter", -apple-system, "Segoe UI", sans-serif;
+}
+
+.proto-bar__brand {
+	color: var(--proto-bar-bg);
+	background: var(--proto-bar-accent);
+	padding: 3px 7px;
+	border-radius: 4px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	font-size: 10px;
+}
+
+.proto-bar__spacer {
+	flex: 1;
+}
+
+.proto-seg {
+	display: inline-flex;
+	border: 1px solid var(--proto-bar-line);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.proto-seg button,
+.proto-btn {
+	appearance: none;
+	border: 0;
+	background: transparent;
+	color: var(--proto-bar-fg);
+	font: inherit;
+	padding: 6px 10px;
+	cursor: pointer;
+}
+
+.proto-seg button.is-on {
+	background: var(--proto-bar-fg);
+	color: var(--proto-bar-bg);
+}
+
+.proto-seg--small {
+	align-items: center;
+	font-size: 12px;
+}
+
+.proto-seg__label {
+	padding: 0 8px;
+	color: var(--proto-bar-fg);
+	opacity: 0.65;
+	white-space: nowrap;
+}
+
+.proto-seg--small button {
+	padding: 4px 8px;
+}
+
+.proto-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px;
+}
+
+.proto-links a {
+	color: var(--proto-bar-dim);
+	text-decoration: none;
+	padding: 6px 8px;
+	border-radius: 5px;
+}
+
+.proto-links a:hover,
+.proto-btn:hover {
+	color: #fff;
+	background: #27272a;
+}
+
+.proto-links a.is-on {
+	color: #fff;
+	background: #3f3f46;
+}
+
+.proto-btn {
+	border: 1px solid var(--proto-bar-line);
+	border-radius: 6px;
+}
+
+.proto-btn--danger {
+	border-color: #b91c1c;
+	color: #fecaca;
+}
+
+.proto-confirm {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.proto-bar :focus-visible,
+.proto-pop :focus-visible {
+	outline: 2px solid var(--proto-bar-accent);
+	outline-offset: 1px;
+}
+
+.proto-pop {
+	position: absolute;
+	top: calc(100% + 6px);
+	right: 16px;
+	width: min(440px, calc(100vw - 32px));
+	max-height: min(70vh, 640px);
+	overflow: auto;
+	background: #fff;
+	color: #18181b;
+	border: 1px solid #e4e4e7;
+	border-radius: 10px;
+	box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+	padding: 14px;
+	box-sizing: border-box;
+}
+
+.proto-pop__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 14px;
+}
+
+.proto-pop__note {
+	color: #52525b;
+	margin: 6px 0 10px;
+	font-weight: 400;
+	line-height: 1.45;
+}
+
+.proto-x {
+	border: 0;
+	background: none;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	color: #52525b;
+}
+
+.proto-flags {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 4px;
+}
+
+.proto-flag {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	gap: 10px;
+	align-items: start;
+	padding: 8px;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.proto-flag:hover {
+	background: #f4f4f5;
+}
+
+.proto-flag.is-planned {
+	cursor: default;
+}
+
+.proto-flag__text {
+	display: grid;
+	gap: 2px;
+	min-width: 0;
+}
+
+.proto-flag__title {
+	font-weight: 600;
+}
+
+.proto-flag__sum {
+	color: #52525b;
+	font-weight: 400;
+	line-height: 1.4;
+}
+
+.proto-pop__all {
+	display: flex;
+	gap: 6px;
+	margin: 0 0 8px;
+}
+
+.proto-pop .proto-btn--light {
+	color: #18181b;
+	border-color: #d4d4d8;
+	background: #fff;
+}
+
+.proto-pop .proto-btn--light:hover {
+	background: #f4f4f5;
+	color: #18181b;
+}
+
+.proto-flag__req {
+	color: #71717a;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.proto-flag__req.is-unmet {
+	color: #b45309;
+}
+
+.proto-chip {
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	padding: 2px 6px;
+	border-radius: 999px;
+	background: #f4f4f5;
+	color: #52525b;
+	white-space: nowrap;
+}
+
+.proto-chip--prototyped {
+	background: #fef9c3;
+	color: #854d0e;
+}
+
+.proto-chip--shipped {
+	background: #dcfce7;
+	color: #166534;
+}
+
+.proto-pop__link {
+	display: inline-block;
+	margin-top: 10px;
+	color: #1d4ed8;
+}
+
+.proto-msg {
+	padding: 40px 16px;
+	text-align: center;
+	color: #50575e;
+	font-size: 14px;
+}
+
+.proto-msg--error {
+	text-align: start;
+	color: #b91c1c;
+}
+
+.proto-msg pre {
+	white-space: pre-wrap;
+	font-size: 12px;
+	color: #3f3f46;
+	background: #fff;
+	padding: 12px;
+	border-radius: 6px;
+	overflow-x: auto;
+}

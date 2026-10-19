@@ -1,0 +1,72 @@
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<title>3D Viewer Live Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/wp-admin.css">
+<link rel="stylesheet" href="css/admin-list.css">
+<link rel="stylesheet" href="css/coverage.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/editor.css">
+<link rel="stylesheet" href="css/product-panel.css">
+<link rel="stylesheet" href="css/storefront.css">
+<link rel="stylesheet" href="css/viewer.css">
+<link rel="stylesheet" href="css/ar-export.css">
+<link rel="stylesheet" href="css/conditional-logic.css">
+<link rel="stylesheet" href="css/drawer-history.css">
+<link rel="stylesheet" href="css/saved-designs.css">
+<link rel="stylesheet" href="css/decals.css">
+<link rel="stylesheet" href="css/cart.css">
+<link rel="stylesheet" href="css/cart-blocks.css">
+<link rel="stylesheet" href="css/email.css">
+<link rel="stylesheet" href="css/external-url.css">
+<link rel="stylesheet" href="css/block.css">
+<link rel="stylesheet" href="css/customizer-modal.css">
+<link rel="stylesheet" href="css/hdri.css">
+<link rel="stylesheet" href="css/gallery-lane.css">
+<!-- Live demo styles: one file per area, see live-demo/README.md -->
+<link rel="stylesheet" href="live-demo/css/live-demo.css">
+<link rel="stylesheet" href="live-demo/css/block-editor.css">
+<link rel="stylesheet" href="live-demo/css/v3d-admin.css">
+<link rel="stylesheet" href="live-demo/css/viewer-modern.css">
+<link rel="stylesheet" href="live-demo/css/v3d-pro.css">
+<link rel="stylesheet" href="live-demo/css/v3d-woo.css">
+<link rel="stylesheet" href="live-demo/css/tour.css">
+<!-- Same Tailwind config as tailwind.config.js, so editor class strings copy over verbatim. -->
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+	tailwind.config = {
+		darkMode: 'class',
+		important: '.wc3d-app',
+		corePlugins: { preflight: false },
+		theme: {
+			extend: {
+				fontFamily: {
+					sans: ['"wc3d Inter"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+					mono: ['ui-monospace', 'SFMono-Regular', '"SF Mono"', 'Menlo', 'monospace'],
+				},
+				colors: {
+					brand: { 50: '#f5f8ff', 100: '#e6eeff', 200: '#c7d7fd', 300: '#9cb8fa', 400: '#5f8bf5', 500: '#1b5cf0', 600: '#1450d8', 700: '#1242b0', 800: '#13398c', 900: '#14326f', 950: '#0d1f47' },
+					save: { DEFAULT: '#3b52f6', hover: '#2f45e0' },
+					slate: { 50: '#f8f9fa', 100: '#f3f4f6', 200: '#e5e7eb', 300: '#cbd5e1', 400: '#9ca3af', 500: '#6b7280', 600: '#4b5563', 700: '#374151', 800: '#1f2937', 900: '#111827', 950: '#030712' },
+				},
+				boxShadow: {
+					card: '0 1px 2px rgba(15,23,42,0.04)',
+					'card-h': '0 4px 12px -4px rgba(15,23,42,0.10), 0 2px 4px -2px rgba(15,23,42,0.06)',
+					pop: '0 12px 32px rgba(15,23,42,0.12)',
+					ring: '0 0 0 3px rgba(27,92,240,0.22)',
+				},
+				borderRadius: { DEFAULT: '8px', md: '6px', lg: '10px', xl: '12px', '2xl': '16px' },
+			},
+		},
+	};
+</script>
+<script type="importmap">
+	{
+		"imports": {
+			"three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+			"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+		}
+	}
+</script>
+<div id="proto-app"><div class="proto-msg">Loading the demo…</div></div>
+<script type="module" src="live-demo/app.js"></script>

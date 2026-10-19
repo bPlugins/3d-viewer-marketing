@@ -1,0 +1,468 @@
+/* Planned (customizer-modal): Customize opens a large dialog with the live viewer and the options panel.
+   Spec: specs/customizer-modal.md. Above .wc3d-modal (99999) and the prototype bar, below .wc3d-ar-modal (999999). */
+
+/* The viewer's host and its page slot add no box: the wrapper sizes against the root or the stage. */
+.wc3d-viewer-slot,
+.wc3d-viewer-host {
+	display: contents;
+}
+
+/* Where the viewer was on the page while it is in the dialog. */
+.wc3d-customizer-modal__placeholder {
+	position: absolute;
+	inset: 0;
+	background: center / contain no-repeat;
+}
+
+body.wc3d-customizer-modal-open {
+	overflow: hidden;
+}
+
+.wc3d-customizer-modal {
+	/* The dialog is printed at <body> level, outside the theme wrapper: same tokens as the demo theme. */
+	--st-text: #1f2328;
+	--st-muted: #5f6670;
+	--st-line: #e3e5e8;
+	--st-soft: #f6f7f8;
+	--st-accent: #2b2d42;
+	--st-accent-hover: #15161f;
+	--st-sale: #b42318;
+	position: fixed;
+	inset: 0;
+	z-index: 100001;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--st-text);
+	font: 400 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.wc3d-customizer-modal *,
+.wc3d-customizer-modal *::before,
+.wc3d-customizer-modal *::after {
+	box-sizing: border-box;
+}
+
+.wc3d-customizer-modal__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.75);
+	animation: wc3d-cm-fade 180ms ease-out;
+}
+
+.wc3d-customizer-modal__dialog {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: min(1280px, calc(100vw - 48px));
+	height: min(860px, calc(100vh - 48px));
+	height: min(860px, calc(100dvh - 48px));
+	background: #fff;
+	border-radius: 12px;
+	overflow: hidden;
+	overflow: clip;
+	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+	animation: wc3d-cm-in 180ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.wc3d-customizer-modal__dialog:focus {
+	outline: none;
+}
+
+@keyframes wc3d-cm-fade {
+	from { opacity: 0; }
+}
+
+@keyframes wc3d-cm-in {
+	from { opacity: 0; transform: scale(0.98); }
+}
+
+.wc3d-customizer-modal__header {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	height: 56px;
+	padding: 0 10px 0 20px;
+	border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.wc3d-customizer-modal__title {
+	margin: 0;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.3;
+	color: #1e293b;
+}
+
+.wc3d-customizer-modal__close {
+	flex: 0 0 auto;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	color: #64748b;
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 0.15s, color 0.15s;
+}
+
+.wc3d-customizer-modal__close:hover {
+	background: #f1f5f9;
+	color: #0f172a;
+}
+
+.wc3d-customizer-modal__body {
+	position: relative;
+	flex: 1;
+	min-height: 0;
+	display: flex;
+}
+
+/* The moved wrapper: stage on the left, options panel on the right. `clip`, unlike hidden, cannot be
+   scrolled, so scrolling a missing group into view moves only the options list. */
+.wc3d-customizer-modal .wc3d-viewer-wrapper--modal {
+	flex: 1;
+	min-width: 0;
+	overflow: clip !important;
+}
+
+.wc3d-customizer-modal .wc3d-overlay-btn.wc3d-customize-btn {
+	display: none !important;
+}
+
+.wc3d-customizer-modal canvas {
+	touch-action: none;
+}
+
+/* Customize is hidden here, so only a labelled AR button lifts the gallery strip. */
+@container wc3d-stage (min-width: 260px) and (max-width: 599px) {
+
+	.wc3d-customizer-modal .wc3d-viewer-wrapper > .wc3d-canvas-container > .wc3d-gallery-row {
+		bottom: 12px;
+	}
+
+	.wc3d-customizer-modal .wc3d-viewer-wrapper > .wc3d-canvas-container:has(.wc3d-ar-btn) > .wc3d-gallery-row {
+		bottom: 50px;
+	}
+}
+
+.wc3d-customizer-modal__panel {
+	position: relative;
+	z-index: 3;
+	flex: 0 0 clamp(340px, 30vw, 400px);
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	background: #fff;
+	border-left: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.wc3d-customizer-modal__scroll {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	padding: 18px 20px;
+}
+
+.wc3d-customizer-modal__attributes {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 20px;
+	padding-bottom: 18px;
+	border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.wc3d-customizer-modal__field .wc3d-customer-drawer__section-title {
+	display: block;
+	margin-bottom: 6px;
+}
+
+.wc3d-customizer-modal__field .wc3d-customer-drawer__select {
+	min-height: 40px;
+	font-size: 14px;
+}
+
+.wc3d-customizer-modal .reset_variations {
+	align-self: flex-start;
+	margin: -4px 0 0;
+	color: #2f5d8a;
+	font-size: 13px;
+}
+
+.wc3d-customizer-modal__error,
+.wc3d-customizer-modal__errors {
+	margin: 0;
+	padding: 10px 12px;
+	border-left: 3px solid var(--st-sale);
+	background: #fdf3f2;
+	color: var(--st-sale);
+	font-size: 13.5px;
+}
+
+.wc3d-customizer-modal__errors {
+	margin-bottom: 18px;
+}
+
+.wc3d-customizer-modal__errors ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.wc3d-customizer-modal__errors li + li {
+	margin-top: 4px;
+}
+
+.wc3d-customizer-modal__options > :last-child {
+	margin-bottom: 16px;
+}
+
+.wc3d-customizer-modal__scroll > .wc3d-customer-drawer__share-btn {
+	margin: 0 !important;
+}
+
+.wc3d-customizer-modal__tools:not(.wc3d-customer-drawer__footer--history) {
+	display: flex;
+}
+
+.wc3d-customizer-modal__footer {
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 14px 20px;
+	padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+	border-top: 1px solid rgba(226, 232, 240, 0.9);
+	background: #fff;
+	box-shadow: 0 -6px 16px rgba(15, 23, 42, 0.04);
+}
+
+.wc3d-customizer-modal__footer .wc3d-price-summary {
+	max-width: none;
+	padding: 10px 14px;
+}
+
+.wc3d-customizer-modal__buy {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.wc3d-customizer-modal .screen-reader-text {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	white-space: nowrap;
+}
+
+.wc3d-customizer-modal__qty .qty {
+	width: 64px;
+	height: 44px;
+	padding: 0 6px;
+	border: 1px solid #c9ced4;
+	border-radius: 6px;
+	text-align: center;
+	font: inherit;
+}
+
+.wc3d-customizer-modal .button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 44px;
+	padding: 0 16px;
+	border: 0;
+	border-radius: 6px;
+	background: #eceef1;
+	color: var(--st-text);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.wc3d-customizer-modal .button:hover {
+	background: #dfe2e6;
+}
+
+.wc3d-customizer-modal .button.alt {
+	flex: 1;
+	min-width: 0;
+	background: var(--st-accent);
+	color: #fff;
+}
+
+.wc3d-customizer-modal .button.alt:hover {
+	background: var(--st-accent-hover);
+}
+
+.wc3d-customizer-modal .button.disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.wc3d-customizer-modal__total {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 12px;
+	font-size: 15px;
+	font-variant-numeric: tabular-nums;
+}
+
+.wc3d-customizer-modal__total strong {
+	font-size: 17px;
+	font-weight: 700;
+}
+
+.wc3d-customizer-modal__total-empty {
+	color: var(--st-muted);
+	font-size: 13.5px;
+}
+
+:is(.wc3d-customizer-modal__close, .wc3d-customizer-modal .button, .wc3d-customizer-modal__qty .qty):focus-visible {
+	outline: 2px solid #6366f1;
+	outline-offset: 2px;
+}
+
+/* Phones and portrait tablets: full-screen sheet, viewer on top, options below, sticky bar.
+   Keep in sync with NARROW in customizer-modal.js. */
+@media (max-width: 768px) and (min-height: 541px), (max-width: 1100px) and (orientation: portrait) {
+
+	.wc3d-customizer-modal__dialog {
+		width: 100vw;
+		height: 100vh;
+		height: 100dvh;
+		border-radius: 0;
+	}
+
+	.wc3d-customizer-modal__header {
+		height: 52px;
+		padding: 0 4px 0 16px;
+	}
+
+	.wc3d-customizer-modal .wc3d-viewer-wrapper--modal {
+		flex-direction: column;
+	}
+
+	.wc3d-customizer-modal .wc3d-viewer-wrapper--modal > .wc3d-canvas-container {
+		flex: 0 0 auto;
+		height: max(220px, 45vh);
+		height: max(220px, 45dvh);
+	}
+
+	.wc3d-customizer-modal__panel {
+		flex: 1 1 auto;
+		min-height: 0;
+		border-left: 0;
+		border-top: 1px solid rgba(226, 232, 240, 0.9);
+	}
+
+	.wc3d-customizer-modal__scroll {
+		padding: 16px;
+	}
+}
+
+/* Short landscape screens (phones held sideways): full screen, viewer and panel side by side, compact bar.
+   Keep in sync with SHORT in customizer-modal.js. */
+@media (max-height: 540px) and (orientation: landscape) {
+
+	.wc3d-customizer-modal__dialog {
+		width: 100vw;
+		height: 100vh;
+		height: 100dvh;
+		border-radius: 0;
+	}
+
+	.wc3d-customizer-modal__header {
+		height: 44px;
+		padding: 0 0 0 16px;
+	}
+
+	.wc3d-customizer-modal__scroll {
+		padding: 14px 16px;
+	}
+}
+
+/* Both compact layouts: one-line total bar, tools at the end of the list, 40px+ touch targets. */
+@media (max-width: 768px), (max-width: 1100px) and (orientation: portrait), (max-height: 540px) and (orientation: landscape) {
+
+	.wc3d-customizer-modal__close {
+		width: 44px;
+		height: 44px;
+	}
+
+	/* 40px touch targets for the 20px swatches; plain grids get a wider gap so the areas do not overlap. */
+	.wc3d-customizer-modal .wc3d-customer-drawer__colors-grid:not(.wc3d-customer-drawer__colors-grid--priced) {
+		gap: 20px;
+	}
+
+	.wc3d-customizer-modal .wc3d-customer-drawer__color-bubble {
+		position: relative;
+	}
+
+	.wc3d-customizer-modal .wc3d-customer-drawer__color-bubble::after {
+		content: "";
+		position: absolute;
+		inset: -10px;
+	}
+
+	/* Active and hover swatches are scaled up; shrink the area back to about 40px. */
+	.wc3d-customizer-modal .wc3d-customer-drawer__color-bubble:is(.active, :hover)::after {
+		inset: -7.5px;
+	}
+
+	.wc3d-customizer-modal .wc3d-customer-drawer__pill,
+	.wc3d-customizer-modal :is(.wc3d-customer-drawer__reset-btn, .wc3d-customer-drawer__share-btn, .wc3d-decal__input, .wc3d-customer-drawer__select) {
+		min-height: 40px;
+	}
+
+	.wc3d-customizer-modal .wc3d-customer-drawer__history-btn {
+		width: 40px;
+		height: 40px;
+	}
+
+	/* A 40px-tall hit area for the text link that stops short of the select above. */
+	.wc3d-customizer-modal .reset_variations {
+		display: inline-block;
+		padding: 10px 8px;
+		margin: -12px 0 -10px -8px;
+	}
+
+	.wc3d-customizer-modal__scroll > .wc3d-customer-drawer__share-btn {
+		margin: 0 0 10px !important;
+	}
+
+	.wc3d-customizer-modal__footer {
+		gap: 8px;
+		padding: 10px 16px;
+		padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.wc3d-customizer-modal__backdrop,
+	.wc3d-customizer-modal__dialog {
+		animation: none;
+	}
+}

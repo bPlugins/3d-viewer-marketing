@@ -1,0 +1,626 @@
+[
+  {
+    "feature": "Video hotspots",
+    "segment": "Any site",
+    "subject": "Add video to your model, keep the page fast",
+    "preview": "Nothing loads until a visitor opens it.",
+    "paragraphs": [
+      "A short video often explains a product or project better than any paragraph. But several embedded videos slow a page down, and slow pages lose visitors.",
+      "Attach the video to a pin on the model instead. YouTube, Vimeo or your own MP4 file opens in a card when the visitor clicks. Until then, nothing loads at all.",
+      "Visitors get the demo exactly where it makes sense, and your page stays fast for everyone who doesn't click.",
+      "That's Video hotspots in 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Waypoint tours",
+    "segment": "Any site",
+    "subject": "Walk visitors through your model, step by step",
+    "preview": "A guided tour without editing a single video.",
+    "paragraphs": [
+      "Ever presented a product or project to a client in person? You point at one part, then the next, in the order that tells the story. Online, visitors just spin the model at random.",
+      "Set up a series of camera stops on the model. Each pin flies the camera to a saved angle, so visitors follow your tour one view at a time. Numbered pins make the order obvious.",
+      "Your story gets told the way you would tell it, even when you aren't there.",
+      "That's Waypoint hotspots in 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Dimensions ruler",
+    "segment": "Any site",
+    "subject": "Show the size right on the model",
+    "preview": "Width, height and depth, measured in place.",
+    "paragraphs": [
+      "How big is it?",
+      "A visitor likes what they see in 3D, but can't tell if it's the size of a shoebox or a cabinet. So they email you, or they leave to check somewhere else.",
+      "The fix is simple: measurements drawn on the model itself. Width, height and depth appear as labeled lines, either behind a ruler button or always on.",
+      "Visitors get the answer while they're still looking, and you get fewer size questions in your inbox.",
+      "That's the real-world dimensions ruler in 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Auto-rotate",
+    "segment": "Any site",
+    "subject": "Let the model turn on its own",
+    "preview": "A slow spin that shows every side.",
+    "paragraphs": [
+      "A 3D model that sits still can look like a flat picture. Many visitors scroll past without realizing they can drag it.",
+      "Gentle motion solves that. The model starts turning after a short delay you choose, at the speed you choose. A negative speed spins it the other way if that direction suits it better.",
+      "The movement catches the eye and shows every side without a single click, so more visitors notice the model and stop to look.",
+      "That's auto-rotate in 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Initial view and zoom",
+    "segment": "Any site",
+    "subject": "Open on your best angle",
+    "preview": "Choose the first view and how close it starts.",
+    "paragraphs": [
+      "First impressions in 3D depend on the angle. Load a model and it may face sideways, show its back, or sit too small in the frame.",
+      "The fix is to decide the opening shot yourself. Turn the model to the angle you want, save it as the starting view, and set how close it opens, from 0.5x to 10x.",
+      "Every visitor sees the side that matters first, framed the way you intended. Your work looks deliberate, not random.",
+      "That's the initial camera view and initial zoom in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Rotation locks",
+    "segment": "Any site",
+    "subject": "Keep visitors from getting lost in 3D",
+    "preview": "Lock one rotation axis, reset in one click.",
+    "paragraphs": [
+      "Someone spins your model, flips it upside down, and can't find the front again. They give up and leave with the wrong impression.",
+      "Two small controls prevent that. Lock left-right or up-down rotation so the model only turns the way that makes sense. Add a reset button that returns to the starting view in one click.",
+      "Visitors stay oriented, explore with confidence, and always see the model the way you planned.",
+      "Rotation locks are part of 3D Viewer Pro. The reset-view button is already in the free plugin, so the two work together."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Texture editor",
+    "segment": "Any site",
+    "subject": "Change a color without re-exporting",
+    "preview": "Adjust materials right where the model lives.",
+    "paragraphs": [
+      "A client wants the blue part in green. Normally that means opening the 3D software, exporting the model again and re-uploading it, all for one small change.",
+      "Imagine adjusting it in WordPress instead. Pick a material, change its color, swap or upload a texture, and tune metalness and roughness. Visitors see the updated look.",
+      "Small revisions happen on the spot instead of a round trip through the 3D software, and the page keeps pace with feedback.",
+      "That's the texture editor in 3D Viewer Pro. It's marked experimental, so test it on your model first."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Mobile poster mode",
+    "segment": "Any site",
+    "subject": "Faster pages on phones, 3D one tap away",
+    "preview": "Show a light image first and let visitors choose when to load the model.",
+    "paragraphs": [
+      "Your 3D model looks great on a laptop. On a phone with a weak signal, it can be the heaviest thing on the page, and the visitor waits before seeing anything at all.",
+      "A better approach for phones: show a still image first. Visitors who want to explore tap a button and the 3D model loads. Or keep phones on the image only.",
+      "The page appears quickly, the image loads early to help your page-speed score (LCP), and visitors on slow connections still see your work right away.",
+      "That's mobile poster mode in 3D Viewer Pro. Choose full 3D, image with \"tap to load 3D\", or image only, and set the screen width that counts as a phone."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Control layout",
+    "segment": "Any site",
+    "subject": "Keep viewer buttons off your model",
+    "preview": "Place each control where it suits your layout, not where it lands by default.",
+    "paragraphs": [
+      "Is the fullscreen button sitting right on top of the part you want people to see? On a small viewer, a row of default buttons can cover the model itself.",
+      "The fix is to choose where each button goes. Move controls to the corners or edges that suit your layout, hide the ones you don't need, and adjust their size and spacing.",
+      "The model stays clear, the page looks designed rather than default, and visitors still find every control they need.",
+      "That's the drag-and-drop control layout in 3D Viewer Pro: eight zones, plus control size, spacing and edge offset."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Top picks"
+  },
+  {
+    "feature": "3D Analytics basics",
+    "segment": "Any site",
+    "subject": "Is your 3D model actually being used?",
+    "preview": "See views, interaction rate and time spent in 3D.",
+    "paragraphs": [
+      "You added a 3D model to an important page, and it took real time to prepare. But do visitors rotate it, or scroll straight past?",
+      "Without numbers, it's a guess. What helps is a simple dashboard: how often the 3D loaded, how many visitors interacted with it, and how long they spent in 3D, compared with the previous period.",
+      "Then you decide with facts: add 3D to more pages, improve a model nobody touches, or move it higher on the page.",
+      "That's 3D & AR Analytics, built into 3D Viewer Pro. There is no separate service to sign up for."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "AR analytics",
+    "segment": "Any site",
+    "subject": "Who opens your model in AR?",
+    "preview": "Count AR launches by platform and follow the desktop-to-phone path.",
+    "paragraphs": [
+      "AR lets visitors place your product in their own room. But it's hard to tell whether anyone uses it, or whether the QR code shown on desktop leads anywhere.",
+      "The answer is to count each step: how often AR launches, split by iPhone and Android, and for desktop visitors, how many scanned to open AR on their phone and then placed the model in the room.",
+      "You see where people drop off, which platform matters most, and whether AR deserves a bigger place on the page.",
+      "That's AR analytics in 3D Viewer Pro. AR itself stays free. Pro shows you what it's doing for you."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Cloud storage",
+    "segment": "Any site",
+    "subject": "Large 3D files, without a heavy server",
+    "preview": "Serve models from the cloud storage you already use.",
+    "paragraphs": [
+      "Detailed 3D models can run to tens of megabytes each. Store a few dozen in your Media Library and backups grow, migrations slow down, and your hosting plan starts to feel small.",
+      "A cleaner setup keeps the files in cloud storage and serves them to the viewer through signed links. You still pick each model from inside WordPress, as usual.",
+      "Your WordPress install stays lean, and you can use storage you may already pay for: Amazon S3, Cloudflare R2, DigitalOcean Spaces, Wasabi, Backblaze B2, Bunny, Google Drive or Dropbox.",
+      "That's Cloud Storage in 3D Viewer Pro, with nine providers. The companion plugin is free for Pro sites."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "White-model fix",
+    "segment": "Any site",
+    "subject": "Why does my 3D model look white?",
+    "preview": "A one-click fix for an older material format.",
+    "paragraphs": [
+      "A model looks fine in your 3D software, then shows up plain white on your site. Often the cause is an older material type inside the GLB file that today's web viewers don't support.",
+      "Re-exporting every file is slow, and you may not have the source. Better: find the affected files automatically, see where each one is used, and convert them to the modern format in one click.",
+      "Your models show their real colors again, without a trip back to the designer. The original stays untouched in your Media Library, with the fixed copy saved alongside it.",
+      "That's the legacy-material converter in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Top picks"
+  },
+  {
+    "feature": "CAD edges and wireframe",
+    "segment": "Any site",
+    "subject": "Show the edges on your CAD parts",
+    "preview": "Outline the geometry so engineering detail reads at a glance.",
+    "paragraphs": [
+      "You can already show STL, STEP, OBJ and FBX files on your site for free. But a smooth gray part can hide the very detail an engineer or client wants to check.",
+      "Drawing the edges helps. Outline the model's edges or show a full wireframe, pick the line color, and set a threshold to show only sharp features or every triangle.",
+      "Holes, chamfers and surfaces become easy to read, so people spend less time asking what they're looking at. Pair it with the free download button and they can take the file with them.",
+      "That's edge and wireframe display for the Advanced viewer in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Top picks"
+  },
+  {
+    "feature": "7-day free trial",
+    "segment": "Any site",
+    "subject": "Try Pro on your own site first",
+    "preview": "Seven days, every Pro feature, no card needed.",
+    "paragraphs": [
+      "Not sure Pro is worth it for your site? That's a fair question, and a feature list can't answer it. Only your own models, pages and visitors can.",
+      "The honest way to decide is to test it where it matters. Turn on the features you're curious about, check how your pages look on a phone, and see what the analytics shows.",
+      "If it earns its place, keep it. If not, you've spent nothing.",
+      "3D Viewer Pro comes with a 7-day free trial. No card required, and every Pro feature is included."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Tab and popup",
+    "segment": "WooCommerce",
+    "subject": "Put 3D where your page has room",
+    "preview": "A product tab, or a popup from any element you choose.",
+    "paragraphs": [
+      "Is your WooCommerce product page already busy? A large 3D viewer at the top can push the photos down and crowd the description.",
+      "Two more placement choices solve it. Give the model its own \"3D View\" tab. Or leave the layout as it is and open the model in a popup from any button, image or text on the page.",
+      "Your page stays clean, and visitors who want 3D are one click away from it.",
+      "That's tab and popup placement in 3D Viewer Pro, which brings you to six positions in total."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Shop-page 3D",
+    "segment": "WooCommerce",
+    "subject": "Let 3D show up before the product page",
+    "preview": "A 3D icon or the live model on shop and category cards.",
+    "paragraphs": [
+      "On a WooCommerce site, the shop and category grids do a lot of the work. Visitors scan them fast, and a flat thumbnail gives no hint that a product can be explored in 3D.",
+      "That means the 3D models you set up are only seen by people who already clicked through.",
+      "Mark those products right in the listing. Show a small 3D icon on the card, or show the live model in place of the photo, on shop, category and related-product cards.",
+      "Visitors spot your 3D products at a glance, and more of them have a reason to open the page and take a closer look.",
+      "That's shop-page 3D in 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Configurator included",
+    "segment": "WooCommerce",
+    "subject": "A 3D configurator, already included",
+    "preview": "Shoppers build it, see the price, and order it.",
+    "paragraphs": [
+      "If your store runs on WooCommerce and offers products with options, you know the pattern. Visitors want to see their exact combination of colors and parts before they commit, and photos can't cover every one.",
+      "Hosted configurator services can show it, but they often charge monthly fees plus a cut of every sale, and your data sits on their platform.",
+      "The alternative runs inside your own store. Shoppers pick options and colors on a live 3D model, see the price update, and add their build to the cart.",
+      "There is no fee per sale, and every order and record stays in WooCommerce.",
+      "That's the 3D Product Configurator, and it's included with 3D Viewer Pro. One license covers both."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Configured order preview",
+    "segment": "WooCommerce",
+    "subject": "Custom orders you can't misread",
+    "preview": "A picture of the exact build on every order.",
+    "paragraphs": [
+      "Custom orders through a WooCommerce store often arrive as a list of text: \"Color: Blue, Handle: Option 2.\" Which blue? Which side? The answer usually takes a follow-up email or two.",
+      "Now your customers can customize your product in 3D and order exactly what they built. Each order arrives with a picture of that build in the cart, at checkout, on order pages and in order emails.",
+      "You also get a 3D preview of every build. Your team works from what was actually chosen, customers confirm their design at a glance, and fewer mistakes slip through.",
+      "That's the order snapshot in the 3D Product Configurator, which is included with 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Variations in 3D",
+    "segment": "WooCommerce",
+    "subject": "Show the exact version they picked",
+    "preview": "Pick an option and the 3D model changes instantly.",
+    "paragraphs": [
+      "If your store runs on WooCommerce, some products probably come in several versions: colors, sizes or finishes. Whether visitors order online or ask for a quote, they want to see the version they chose.",
+      "One 3D model can only show one version. A visitor picks blue, still rotates the gray model, and then writes in to ask what blue really looks like.",
+      "The fix is to tie each variation to the 3D view. Pick an option and the model updates instantly, with no page reload: a different model, or the same model with parts shown, hidden, recolored or re-textured.",
+      "Visitors see exactly what they selected, so you get fewer questions and more confident orders and inquiries.",
+      "That's 3D Viewer Pro, with the 3D Product Configurator included. Upload one model, and Auto-Map matches your variation options to its parts in one click."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Top picks"
+  },
+  {
+    "feature": "Hotspots",
+    "segment": "Any site",
+    "subject": "Explain the details right on your 3D model",
+    "preview": "Click the model, drop a pin, add the note.",
+    "paragraphs": [
+      "A visitor spins your 3D model and stops on one part. What is it made of? What does it do? The answer sits three scrolls down in the text, and most people never get there.",
+      "Now put the answer on the model itself. Click the spot where it belongs and a pin drops there, with the camera angle saved. Visitors click the pin and read the detail in place.",
+      "Fewer questions land in your inbox, and the model does more of the explaining for you.",
+      "That's hotspots in 3D Viewer Pro. Pins can show text, links, images, video, animations or a guided tour."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Info hotspots",
+    "segment": "Any site",
+    "subject": "Point visitors to the part that matters",
+    "preview": "The camera moves there and the note appears.",
+    "paragraphs": [
+      "Your model has one detail that sets it apart: a hidden hinge, a hand-finished edge, a built-in sensor. Visitors rotate the model, but they rarely find that detail on their own.",
+      "Add a pin to that spot with a short title and a few lines of text. When a visitor clicks it, the camera flies to the right angle and the explanation opens next to the detail.",
+      "Your strongest points get seen, and visitors understand the product without reading a long page.",
+      "That's Info hotspots in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Link hotspots",
+    "segment": "Any site",
+    "subject": "Let visitors contact you from the model",
+    "preview": "WhatsApp, phone, email or SMS, one click away.",
+    "paragraphs": [
+      "Do interested visitors have to hunt for your contact page? Many have a question at the exact moment they look at the model, and they leave before finding a way to reach you.",
+      "Place a pin on the model that opens WhatsApp, a phone call, an email or a text message in one click. Add a short label such as \"Ask about this part\" so the next step is clear.",
+      "The question becomes a conversation while interest is high, which means more inquiries from the same traffic.",
+      "That's Link hotspots in 3D Viewer Pro. They can also open any web page."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Image hotspots",
+    "segment": "Any site",
+    "subject": "Show the close-up without leaving the model",
+    "preview": "A photo and caption pinned to the exact part.",
+    "paragraphs": [
+      "Some details are too small for a 3D model to show well: a stitch, a texture, a serial plate, a finish. Visitors zoom in and still can't quite see it.",
+      "Pin a close-up photo to that part of the model, with a short caption. One click opens the picture right where the detail sits, so visitors see the real thing in context.",
+      "People trust what they can see clearly, and you answer the \"what does it really look like\" question before anyone has to ask it.",
+      "That's Image hotspots in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Animation hotspots",
+    "segment": "Any site",
+    "subject": "Let visitors trigger the movement",
+    "preview": "Open the lid, fold the arm, start the motion.",
+    "paragraphs": [
+      "Your model can open, fold or move, but on the page it just sits still. Visitors never see how it actually works.",
+      "Put a pin on the part that moves. One click plays that animation from the model: once, on a loop, or back and forth. A second click pauses it.",
+      "Visitors see how it works instead of reading about it, which means fewer \"how does this work\" emails for you.",
+      "That's Animation hotspots in 3D Viewer Pro. They use the animations already inside your model file."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Pin icons and styles",
+    "segment": "Any site",
+    "subject": "Hotspot pins that match your brand",
+    "preview": "Numbered pins, your own logo, four card styles.",
+    "paragraphs": [
+      "Generic markers on a model can look out of place on a carefully designed site. Visitors notice when one element doesn't fit, and it weakens an otherwise polished impression.",
+      "Choose the pin that fits: numbers for step-by-step views, icons such as info, play or question, or your own logo. Then pick one of four ready card styles and set pin size and colors.",
+      "The model looks like part of your brand, not a bolt-on, and a consistent look builds trust with every visitor.",
+      "That's pin icons and style presets in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Hotspot display modes",
+    "segment": "Any site",
+    "subject": "Keep your 3D model clean and uncluttered",
+    "preview": "Choose how each note appears, pin by pin.",
+    "paragraphs": [
+      "Add ten notes to a model and it can start to look like a crowded noticeboard. The product disappears behind the labels.",
+      "Decide how each note shows up. Keep a key label always visible, reveal others on hover, open longer content as a full-page popup, or show just the pin until someone clicks.",
+      "Visitors see the model first and the details when they want them. You can add more information without making the view harder to use.",
+      "That's hotspot display modes in 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Visual Editor",
+    "segment": "Any site",
+    "subject": "Place hotspots and camera angles by clicking",
+    "preview": "No guessing coordinates, no trial and error.",
+    "paragraphs": [
+      "Setting up a 3D view by typing numbers is slow. You guess a camera angle, save, check the page, and guess again. A simple setup can eat an afternoon.",
+      "Load the model in a dedicated editor, click where each hotspot belongs and rotate to the angle visitors should see first. Then copy the values and paste them into whichever editor you use.",
+      "Setup gets faster, and the finished view looks exactly the way you framed it.",
+      "That's the Visual Editor in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Elementor parity",
+    "segment": "Any site",
+    "subject": "Build your full 3D viewer in Elementor",
+    "preview": "Every block setting, plus click-to-place hotspots.",
+    "paragraphs": [
+      "If you build pages in Elementor, you know the feeling: the option you need exists, but only in the block editor. So you switch tools, or you go without.",
+      "A widget that offers every setting the block has removes that choice. You place hotspots by clicking the model right in the Elementor canvas and see the result as you work.",
+      "You stay in one tool, build faster, and every page gets the same 3D features no matter which editor made it.",
+      "That's Elementor parity in 3D Viewer Pro: the widget matches the block setting for setting."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Hotspots & editing"
+  },
+  {
+    "feature": "Units and real size",
+    "segment": "Any site",
+    "subject": "Right units, right size, every time",
+    "preview": "Two small settings that keep measurements accurate.",
+    "paragraphs": [
+      "Your model came out of the design software at the wrong scale. Now a two-meter shelf reads as two millimeters, and half your visitors think in inches anyway.",
+      "Two small settings fix this. Pick the unit your audience uses: mm, cm, m, in or ft. Then enter one real measurement, and the other two labels adjust to match. No re-export needed.",
+      "The numbers on the model stay correct and familiar, so people trust what they read and don't need to ask.",
+      "That's the unit setting and real-size override in 3D Viewer Pro, both part of the dimensions ruler."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Presenting the model"
+  },
+  {
+    "feature": "Multi-model gallery",
+    "segment": "Any site",
+    "subject": "One viewer for all your models",
+    "preview": "Thumbnails and arrows instead of a long scroll.",
+    "paragraphs": [
+      "You have five models to show: a product line, a set of parts, or pieces from a portfolio. Stack five viewers down the page and it gets long and hard to compare.",
+      "A better layout puts them all in one viewer. A strip of thumbnails shows what's available, arrows step through the set, and visitors switch models with a click.",
+      "The page stays short and tidy. Visitors browse everything in one spot and compare each model in the same frame.",
+      "That's the multi-model gallery in 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Presenting the model"
+  },
+  {
+    "feature": "Per-model settings",
+    "segment": "Any site",
+    "subject": "Each model in a gallery, set up its own way",
+    "preview": "Lighting, AR, hotspots and view, per model.",
+    "paragraphs": [
+      "Galleries often force one setup on everything. The dark piece needs more light, the large one needs a different starting angle, and only one of them makes sense in AR.",
+      "What helps is giving each model its own settings inside the same viewer: its own lighting, AR, hotspots, initial view and real size.",
+      "Every model looks its best when a visitor clicks to it, and you don't have to compromise or split the gallery into separate viewers.",
+      "That's how galleries work in 3D Viewer Pro. Each model keeps its own settings."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Presenting the model"
+  },
+  {
+    "feature": "Animation playback",
+    "segment": "Any site",
+    "subject": "Show how it moves, not just how it looks",
+    "preview": "Play animations on load and let visitors pick.",
+    "paragraphs": [
+      "Some things only make sense in motion: a lid that opens, a part that folds, a mechanism that turns. A still model can't explain that.",
+      "If the animation is already in the model file, it can play on its own as soon as the model loads. Choose which clip plays first, and add a menu so visitors can pick the others.",
+      "People understand how it works in seconds, without a separate video or a long description, and with fewer follow-up questions.",
+      "That's animation autoplay and the animation picker in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Presenting the model"
+  },
+  {
+    "feature": "Variant picker",
+    "segment": "Any site",
+    "subject": "Every colorway from a single file",
+    "preview": "Visitors switch finishes with one click.",
+    "paragraphs": [
+      "You offer a design in four colors. Uploading four models, or showing one and describing the rest, makes visitors work harder to picture their choice.",
+      "If your model file already holds its color and material variants, a simple menu next to the model can switch between them. Visitors choose a finish and the model changes in place.",
+      "You manage one file, every option stays on view, and you get fewer questions about which colors exist.",
+      "That's the variant picker in 3D Viewer Pro. It reads the glTF material variants stored in the file you already have."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Presenting the model"
+  },
+  {
+    "feature": "Lighting controls",
+    "segment": "Any site",
+    "subject": "Make colors look like the real thing",
+    "preview": "Tone mapping, more exposure and a backdrop.",
+    "paragraphs": [
+      "Reds look orange, whites look gray, and shiny parts lose their shine. The model is fine. The lighting on the page is flattening it.",
+      "Better rendering fixes it. Tone mapping (Neutral, ACES or AgX) controls how colors and highlights reach the screen. Exposure up to 10 brightens dark models, and a background image sets the scene.",
+      "Models look closer to the real thing, so visitors can trust what they see before they get in touch.",
+      "These lighting extras are in 3D Viewer Pro, on top of the lighting and skybox already in the free plugin."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Presenting the model"
+  },
+  {
+    "feature": "Reduce Motion and spinner",
+    "segment": "Any site",
+    "subject": "Two small details visitors notice",
+    "preview": "Respect motion settings and show your own loading animation.",
+    "paragraphs": [
+      "Some visitors turn on reduced motion in their device settings, and a spinning model can make them uncomfortable. Meanwhile, a generic loading wheel tells nobody whose site they are on.",
+      "Two small fixes help. One setting stops auto-rotation and animation autoplay on phones and for any visitor whose device asks for less motion. And while a model loads, your own logo or animation appears instead.",
+      "Your site feels considerate to every visitor, and even the loading moment stays on-brand.",
+      "That's Reduce Motion and the custom loading spinner in 3D Viewer Pro. Upload a GIF, WebP, SVG or PNG and set its size and background."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Speed & controls"
+  },
+  {
+    "feature": "Button labels",
+    "segment": "Any site",
+    "subject": "Do visitors know what each icon does?",
+    "preview": "Add plain-language labels to your 3D viewer buttons.",
+    "paragraphs": [
+      "An icon that clearly means \"reset view\" to you may mean nothing to a first-time visitor. Unclear buttons get ignored, and useful options like AR or fullscreen go unused.",
+      "Clear labels solve it. Show a short tooltip when someone hovers over or focuses a button, or put the text right next to the icon. Then write the wording yourself, in words your visitors use.",
+      "Visitors use more of the viewer, and you get fewer \"how do I...\" questions.",
+      "That's button labels in 3D Viewer Pro. Choose off, tooltip or inline text, and rename any button, from Zoom to View in AR."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "Speed & controls"
+  },
+  {
+    "feature": "Top models and CSV",
+    "segment": "Any site",
+    "subject": "Which 3D models earn their place?",
+    "preview": "Rank models and pages, pick a date range, export to CSV.",
+    "paragraphs": [
+      "With several 3D models across a site, effort tends to get spread evenly. Some models get attention every day. Others sit on pages few people visit.",
+      "A ranked list fixes that. See your top models and top pages for any date range, then export the numbers to a spreadsheet for a client, a manager or your own records.",
+      "You put time into the models that matter, and reporting takes minutes instead of screenshots and guesswork.",
+      "That's top models, top pages and CSV export in the 3D & AR Analytics of 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "3D & AR Analytics"
+  },
+  {
+    "feature": "Privacy-friendly analytics",
+    "segment": "Any site",
+    "subject": "3D analytics without cookies",
+    "preview": "No IP addresses stored, and browser privacy signals respected.",
+    "paragraphs": [
+      "Many analytics tools set cookies and record IP addresses. That brings consent questions and makes it harder to explain what your site collects.",
+      "There is a quieter way to measure engagement: count 3D views and interactions anonymously, with no cookies and no IP addresses, and skip visitors whose browser sends Do Not Track or Global Privacy Control.",
+      "You get useful numbers and keep your privacy story simple. If you already use Google Analytics 4, the same events can go there too.",
+      "That's the privacy-friendly analytics in 3D Viewer Pro, with optional GA4 forwarding."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "3D & AR Analytics"
+  },
+  {
+    "feature": "No lock-in",
+    "segment": "Any site",
+    "subject": "What happens if you stop paying?",
+    "preview": "Your viewers keep working and your data stays put.",
+    "paragraphs": [
+      "Some plugins switch features off the day a license ends. Pages break, settings vanish, and you're pushed to renew or rebuild. It's a fair worry before you commit to any tool.",
+      "A better deal is software that steps back gracefully. Published viewers keep rendering, analytics keeps collecting, and your Pro settings stay saved. Only editing the Pro options pauses until you renew.",
+      "You can commit without feeling locked in, and pick up exactly where you left off.",
+      "That's how 3D Viewer Pro handles a lapsed license. Nothing breaks, and nothing is deleted."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "Trial & trust"
+  },
+  {
+    "feature": "Shoppable hotspots",
+    "segment": "WooCommerce",
+    "subject": "Add to cart, right on the 3D model",
+    "preview": "Price, sale price and the button, pinned to the model.",
+    "paragraphs": [
+      "Does your WooCommerce store take orders online? Then there may be a gap between looking and buying.",
+      "A visitor spins your 3D model and likes a detail. To act on it, they scroll away to find the price and the button. Every extra step is a chance to lose them.",
+      "Now place a pin on the model itself. One click opens a live product card with the image, the price, any sale price shown struck through, and an Add to cart button that works without a page reload.",
+      "Interest turns into an order at the moment it happens. You can also pin matching items or accessories on the same model.",
+      "That's shoppable product hotspots in 3D Viewer Pro."
+    ],
+    "cta_text": "Try Pro free for 7 days",
+    "group": "WooCommerce"
+  },
+  {
+    "feature": "AR and formats",
+    "segment": "WooCommerce",
+    "subject": "AR and every format on product pages",
+    "preview": "The free product box stops at GLB and has no AR.",
+    "paragraphs": [
+      "For sites built on WooCommerce, here is a gap worth knowing. You may already show AR on regular pages, but the free product box accepts GLB/glTF files only and has no AR button.",
+      "So visitors can't place the item in their own room from the product page. And if your files are STEP, STL, OBJ or FBX, they need converting before they can appear there.",
+      "What closes the gap: an AR button on the product page itself, plus support for about 20 file formats on product pages, the same ones you can already use in blocks.",
+      "Visitors see the product in their own space, and you show the files you already have without extra conversion work.",
+      "That's AR and full format support on product pages in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "WooCommerce"
+  },
+  {
+    "feature": "Dimensions from shipping",
+    "segment": "WooCommerce",
+    "subject": "Answer the size question on the model",
+    "preview": "Use the shipping dimensions you already entered.",
+    "paragraphs": [
+      "Most WooCommerce stores already hold width, height and depth in each product's shipping fields. Yet visitors still ask how big something really is.",
+      "A rotating model looks good but gives no sense of scale. Typing the same measurements again into a separate size chart takes time and invites mistakes.",
+      "A better way: a ruler overlay on the 3D model that reads the dimensions you already entered. Visitors see width, height and depth on the model itself, as a button or always on.",
+      "No double entry, fewer size questions, and fewer returns from items that turned out bigger or smaller than expected.",
+      "That's the real-world dimensions ruler in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "WooCommerce"
+  },
+  {
+    "feature": "Product presets",
+    "segment": "WooCommerce",
+    "subject": "Set up the viewer once, then reuse it",
+    "preview": "A consistent 3D look across every product page.",
+    "paragraphs": [
+      "When WooCommerce runs your catalog, adding 3D product by product gets repetitive. Height, background, zoom, thumbnails, hotspot style: each set by hand, each a chance for something to drift.",
+      "After twenty products, no two viewers look quite alike, and the catalog starts to feel pieced together.",
+      "Save your viewer settings once as a reusable preset, then pick it on any product instead of starting from scratch.",
+      "Adding 3D to new products goes faster, the whole catalog looks like it belongs together, and visitors get the same polished look on every product page.",
+      "That's presets in 3D Viewer Pro."
+    ],
+    "cta_text": "Upgrade to Pro",
+    "group": "WooCommerce"
+  }
+]

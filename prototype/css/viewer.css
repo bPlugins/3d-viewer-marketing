@@ -1,0 +1,1686 @@
+/*
+ * Storefront viewer. Rules below the first block are assets/css/frontend-static.css verbatim;
+ * the box sizes are Assets::base_css() (printed inline in <head> by the plugin).
+ */
+
+/* Assets::base_css() */
+.wc3d-viewer-root { width:100%; min-height:450px; background:#0e0e0e; border-radius:8px; overflow:hidden; position:relative; }
+.wc3d-viewer-root.wc3d-viewer-replace { aspect-ratio: 1 / 1; min-height:0; height:auto; }
+.wc3d-viewer-root.wc3d-viewer-inline { margin: 0 0 20px; }
+.wc3d-viewer-root.wc3d-viewer-tab { aspect-ratio: 1 / 1; width:100%; max-width:520px; min-height:0; height:auto; margin:12px auto; }
+.wc3d-viewer-root.wc3d-viewer-shortcode { aspect-ratio: 16 / 9; min-height:0; height:auto; max-height:520px; margin:12px 0; }
+
+/* WC3D storefront: rules target wc3d- elements or theme boxes holding one.
+   !important only where themes/WC restyle the same button/a/img/input. */
+
+/* Viewer layout (React markup, so it never renders before this file loads) */
+.wc3d-viewer-wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+/* Query container for the overlay layout; flex sizing keeps its width
+   independent of its content. */
+.wc3d-canvas-container {
+	position: relative;
+	flex: 1;
+	min-width: 0;
+	height: 100%;
+	container: wc3d-stage / inline-size;
+}
+
+.wc3d-viewer-root.wc3d-viewer-listing {
+	aspect-ratio: 1 / 1;
+	min-height: 0;
+	height: auto;
+	max-height: 300px;
+	margin-bottom: 8px;
+	border-radius: 6px;
+}
+
+/* Swipes on the model drive the orbit controls, not native panning. */
+.woocommerce-product-gallery .wc3d-viewer-root canvas {
+	touch-action: none;
+}
+
+/* Viewer controls stack */
+.wc3d-controls-stack {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	z-index: 2;
+}
+
+/* Premium overlay button style */
+.wc3d-overlay-btn {
+	width: 32px !important;
+	min-width: 32px !important;
+	max-width: 32px !important;
+	height: 32px !important;
+	min-height: 0 !important;
+	max-height: 32px !important;
+	background: rgba(0, 0, 0, 0.6) !important;
+	border: none !important;
+	border-radius: 6px !important;
+	color: #ccc !important;
+	cursor: pointer;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.15s ease-in-out;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+	padding: 0 !important;
+	margin: 0 !important;
+	box-sizing: border-box;
+	line-height: 1 !important;
+}
+
+.wc3d-overlay-btn:hover {
+	background: rgba(0, 0, 0, 0.85) !important;
+	color: #fff !important;
+	transform: scale(1.05);
+}
+
+.wc3d-overlay-btn:active {
+	transform: scale(0.95);
+}
+
+/* Positioning context only on cards holding a badge/trigger (JS also
+   sets it inline). */
+.woocommerce ul.products li.product:has(.wc3d-listing-icon, .wc3d-listing-trigger),
+:is(li.product, .product, .wp-block-post, .wc-block-grid__product, .wc-block-product-template__item, .wp-block-woocommerce-product-template li, .wp-block-woocommerce-product-image, .wc-block-components-product-image, .wc-block-grid__product-image):has(.wc3d-listing-icon, .wc3d-listing-trigger) {
+	position: relative;
+}
+
+/* Listing icon — small "3D" badge overlay */
+.wc3d-listing-icon,
+.woocommerce ul.products li.product .wc3d-listing-icon,
+.product .wc3d-listing-icon,
+.wp-block-post .wc3d-listing-icon,
+.wc-block-grid__product .wc3d-listing-icon {
+	position: absolute !important;
+	top: 8px !important;
+	left: 8px !important;
+	z-index: 5 !important;
+	background: rgba(0, 0, 0, 0.85) !important;
+	color: #fff !important;
+	font-size: 10px !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.04em !important;
+	padding: 4px 8px !important;
+	border-radius: 4px !important;
+	line-height: 1.2 !important;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+	cursor: pointer;
+	transition: background 0.15s ease;
+	display: inline-block !important;
+	text-decoration: none !important;
+	margin: 0 !important;
+	border: none !important;
+}
+
+.wc3d-listing-icon:hover {
+	background: rgba(0, 0, 0, 1) !important;
+	color: #fff !important;
+}
+
+/* Listing modal trigger — overlay on the WC thumbnail; opens the shared modal.
+   Pinned top-right to stay clear of WC "SALE!" flash, which sits top-left. */
+.wc3d-listing-trigger,
+.woocommerce ul.products li.product .wc3d-listing-trigger,
+.product .wc3d-listing-trigger,
+.wp-block-post .wc3d-listing-trigger,
+.wc-block-grid__product .wc3d-listing-trigger {
+	position: absolute !important;
+	top: 8px !important;
+	right: 8px !important;
+	z-index: 6 !important;
+	display: inline-flex !important;
+	align-items: center;
+	gap: 6px;
+	background: rgba(0, 0, 0, 0.85) !important;
+	color: #fff !important;
+	border: none !important;
+	cursor: pointer;
+	font-size: 11px !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.03em !important;
+	padding: 6px 10px !important;
+	border-radius: 4px !important;
+	line-height: 1 !important;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
+	transition: background 0.15s ease, transform 0.15s ease;
+	margin: 0 !important;
+	outline: none !important;
+	text-decoration: none !important;
+}
+
+.wc3d-listing-trigger:hover {
+	background: rgba(0, 0, 0, 1) !important;
+	transform: translateY(-1px) !important;
+	color: #fff !important;
+	border: none !important;
+}
+
+.wc3d-listing-trigger__badge {
+	display: inline-block;
+	padding: 1px 4px;
+	border-radius: 3px;
+	background: #fff;
+	color: #000;
+	font-size: 10px;
+	line-height: 1.2;
+	font-weight: 700;
+}
+
+.wc3d-listing-trigger__label {
+	white-space: nowrap;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+}
+
+/* "3D" badge on the first gallery thumbnail when 3D replaces the main image,
+   so users know which thumb takes them back to the 3D viewer. */
+.woocommerce-product-gallery:has(.wc3d-replace-image) .flex-control-thumbs li:first-child {
+	position: relative;
+}
+
+.woocommerce-product-gallery:has(.wc3d-replace-image) .flex-control-thumbs li:first-child::before {
+	content: "3D";
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	background: rgba(0, 0, 0, 0.85);
+	color: #fff;
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	padding: 2px 5px;
+	border-radius: 3px;
+	line-height: 1;
+	z-index: 2;
+	pointer-events: none;
+}
+
+/* Modal mode */
+.wc3d-modal-trigger {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 8px 0;
+}
+
+/* "View in 3D" overlay button, bottom-right of the product image slide. */
+.woocommerce-product-gallery__image:has(> .wc3d-modal-trigger--overlay) {
+	position: relative;
+}
+
+@supports not selector(:has(*)) {
+
+	.woocommerce-product-gallery__image {
+		position: relative;
+	}
+}
+
+.wc3d-modal-trigger--overlay {
+	position: absolute !important;
+	right: 12px !important;
+	bottom: 12px !important;
+	z-index: 10 !important;
+	display: inline-flex !important;
+	align-items: center;
+	gap: 6px;
+	background: rgba(0, 0, 0, 0.85) !important;
+	color: #fff !important;
+	border: none !important;
+	cursor: pointer;
+	font-size: 12px !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.03em !important;
+	padding: 8px 12px !important;
+	border-radius: 6px !important;
+	line-height: 1 !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+	text-decoration: none !important;
+	transition: background 0.15s, transform 0.15s;
+	margin: 0 !important;
+	outline: none !important;
+}
+
+.wc3d-modal-trigger--overlay:hover {
+	background: rgba(0, 0, 0, 1) !important;
+	transform: translateY(-1px) !important;
+	color: #fff !important;
+	border: none !important;
+}
+
+.wc3d-modal-trigger--overlay .wc3d-modal-trigger__icon {
+	font-size: 14px;
+	color: #fff;
+}
+
+.wc3d-modal-trigger--overlay .wc3d-modal-trigger__label {
+	white-space: nowrap;
+	color: #fff;
+}
+
+/* JS sets display inline on open; [hidden] must still win on close. */
+.wc3d-modal[hidden] {
+	display: none !important;
+}
+
+.wc3d-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 99999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wc3d-modal__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.75);
+}
+
+/* A square, like the gallery slide: the poster (contain) and the model fill
+   it, so the overlay buttons sit at the edges of what the shopper sees. */
+.wc3d-modal__panel {
+	position: relative;
+	width: min(90vw, 85vh, 1100px);
+	background: #0e0e0e;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.wc3d-modal__panel .wc3d-viewer-root {
+	width: 100%;
+	height: auto;
+	min-height: 0;
+	aspect-ratio: 1 / 1;
+	border-radius: 0;
+}
+
+/* Above the poster overlay, drawer and hotspot tooltips in the root. */
+.wc3d-modal__close {
+	position: absolute !important;
+	top: 10px !important;
+	right: 10px !important;
+	z-index: 20000 !important;
+	width: 36px !important;
+	height: 36px !important;
+	border: none !important;
+	border-radius: 50% !important;
+	background: rgba(255, 255, 255, 0.1) !important;
+	color: #fff !important;
+	font-size: 22px !important;
+	line-height: 1 !important;
+	cursor: pointer;
+	transition: background 0.15s;
+	padding: 0 !important;
+	margin: 0 !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	outline: none !important;
+	text-decoration: none !important;
+}
+
+.wc3d-modal__close:hover {
+	background: rgba(255, 255, 255, 0.2) !important;
+	color: #fff !important;
+	border: none !important;
+}
+
+body.wc3d-modal-open {
+	overflow: hidden;
+}
+
+/* Hotspots Style (storefront only: the editor page does not load this sheet, its hotspots use editor.css) */
+.wc3d-hotspot-wrapper:where(:not(.wc3d-app *)) {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	pointer-events: auto;
+}
+
+.wc3d-hotspot-ping:where(:not(.wc3d-app *)) {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 9999px;
+	background-color: rgba(99, 102, 241, 0.4);
+	animation: wc3d-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+	pointer-events: none;
+}
+
+.wc3d-hotspot-button:where(:not(.wc3d-app *)) {
+	position: absolute !important;
+	width: 20px !important;
+	height: 20px !important;
+	border-radius: 9999px !important;
+	background-color: #6366f1 !important;
+	border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+	cursor: pointer;
+	transition: transform 0.2s;
+	padding: 0 !important;
+	margin: 0 !important;
+	box-sizing: border-box;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	color: #fff !important;
+	font-size: 11px !important;
+	line-height: 1 !important;
+}
+
+.wc3d-hotspot-button:where(:not(.wc3d-app *)):hover {
+	transform: scale(1.2);
+	background-color: #4f46e5 !important;
+}
+
+.wc3d-hotspot-button:where(:not(.wc3d-app *)):focus {
+	outline: none !important;
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5) !important;
+}
+
+.wc3d-hotspot-button-pill:where(:not(.wc3d-app *)) {
+	position: absolute !important;
+	background-color: #fff !important;
+	color: #0f172a !important;
+	border: 1px solid rgba(0, 0, 0, 0.15) !important;
+	border-radius: 6px !important;
+	padding: 5px 10px !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+	font-size: 11.5px !important;
+	font-weight: 600 !important;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+	cursor: pointer;
+	white-space: nowrap !important;
+	transition: all 0.2s ease;
+	display: inline-flex !important;
+	align-items: center;
+	box-sizing: border-box;
+	line-height: 1.2 !important;
+}
+
+.wc3d-hotspot-button-pill:where(:not(.wc3d-app *)) span {
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+}
+
+.wc3d-hotspot-button-pill:where(:not(.wc3d-app *)):hover {
+	background-color: #f8fafc !important;
+	transform: scale(1.05);
+}
+
+.wc3d-hotspot-button-pill:where(:not(.wc3d-app *)):focus {
+	outline: none !important;
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5) !important;
+}
+
+.wc3d-hotspot-tooltip-wrap:where(:not(.wc3d-app *)) {
+	position: absolute;
+	bottom: 28px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	pointer-events: auto;
+	z-index: 10000;
+}
+
+.wc3d-hotspot-tooltip:where(:not(.wc3d-app *)) {
+	position: relative;
+	background-color: rgba(15, 23, 42, 0.95);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	color: #f8fafc;
+	padding: 12px 24px 12px 12px;
+	border-radius: 8px;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+	min-width: 200px;
+	max-width: 280px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	font-size: 12.5px;
+	line-height: 1.4;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	box-sizing: border-box;
+}
+
+.wc3d-hotspot-tooltip-title:where(:not(.wc3d-app *)) {
+	font-weight: 700;
+	font-size: 13.5px;
+	color: #fff;
+	display: block;
+}
+
+.wc3d-hotspot-tooltip-desc:where(:not(.wc3d-app *)) {
+	font-size: 11.5px;
+	color: #94a3b8;
+	display: block;
+	white-space: pre-wrap;
+}
+
+.wc3d-hotspot-action-btn:where(:not(.wc3d-app *)) {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 6px 12px;
+	background-color: #6366f1;
+	color: #fff !important;
+	border: none;
+	border-radius: 4px;
+	font-size: 11.5px;
+	font-weight: 600;
+	cursor: pointer;
+	text-decoration: none !important;
+	transition: background-color 0.2s;
+	margin-top: 4px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.wc3d-hotspot-action-btn:where(:not(.wc3d-app *)):hover {
+	background-color: #4f46e5;
+}
+
+.wc3d-hotspot-secondary-btn:where(:not(.wc3d-app *)) {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 5px 12px;
+	background-color: transparent;
+	color: #94a3b8 !important;
+	border: 1px solid #475569;
+	border-radius: 4px;
+	font-size: 11.5px;
+	font-weight: 500;
+	cursor: pointer;
+	text-decoration: none !important;
+	transition: all 0.2s;
+	margin-top: 4px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.wc3d-hotspot-secondary-btn:where(:not(.wc3d-app *)):hover {
+	border-color: #94a3b8;
+	color: #fff !important;
+}
+
+.wc3d-hotspot-product-card:where(:not(.wc3d-app *)) {
+	display: flex;
+	gap: 10px;
+	margin-top: 4px;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	padding-top: 8px;
+	box-sizing: border-box;
+}
+
+.wc3d-hotspot-product-img:where(:not(.wc3d-app *)) {
+	width: 48px !important;
+	height: 48px !important;
+	max-width: 48px !important;
+	max-height: 48px !important;
+	object-fit: cover !important;
+	border-radius: 4px !important;
+	background: #1e293b !important;
+	flex-shrink: 0;
+}
+
+.wc3d-hotspot-product-info:where(:not(.wc3d-app *)) {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 0;
+	flex: 1;
+}
+
+.wc3d-hotspot-product-title:where(:not(.wc3d-app *)) {
+	font-weight: 600;
+	font-size: 12px;
+	color: #f8fafc;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+}
+
+.wc3d-hotspot-product-price:where(:not(.wc3d-app *)) {
+	font-size: 11px;
+	color: #10b981;
+	margin-top: 1px;
+	display: block;
+}
+
+.wc3d-hotspot-spinner:where(:not(.wc3d-app *)) {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 50%;
+	border-top-color: #fff;
+	animation: wc3d-spin 0.8s linear infinite;
+	margin: 6px auto;
+}
+
+@keyframes wc3d-spin {
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.wc3d-hotspot-delete-btn:where(:not(.wc3d-app *)) {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	background: transparent;
+	border: none;
+	color: #94a3b8 !important;
+	font-weight: 700;
+	cursor: pointer;
+	font-size: 10px;
+	padding: 4px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: color 0.15s;
+	line-height: 1;
+}
+
+.wc3d-hotspot-delete-btn:where(:not(.wc3d-app *)):hover {
+	color: #f87171 !important;
+}
+
+@keyframes wc3d-ping {
+
+	75%,
+	100% {
+		transform: scale(2.2);
+		opacity: 0;
+	}
+}
+
+/* AR Button styling */
+.wc3d-overlay-btn.wc3d-ar-btn {
+	width: auto !important;
+	max-width: none !important;
+	padding: 0 12px !important;
+	gap: 6px;
+	display: inline-flex !important;
+}
+
+/* AR QR Code Modal */
+.wc3d-ar-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wc3d-ar-modal__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.6);
+	backdrop-filter: blur(8px);
+}
+
+.wc3d-ar-modal__panel {
+	position: relative;
+	background: rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 12px;
+	padding: 24px;
+	width: 320px;
+	max-width: 90vw;
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	color: #0f172a;
+	z-index: 1;
+	min-height: 250px;
+}
+
+.wc3d-ar-modal__close {
+	position: absolute !important;
+	top: 10px !important;
+	right: 10px !important;
+	background: transparent !important;
+	border: none !important;
+	font-size: 20px !important;
+	font-weight: 700 !important;
+	color: #64748b !important;
+	cursor: pointer;
+	line-height: 1 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	outline: none !important;
+	text-decoration: none !important;
+	box-shadow: none !important;
+}
+
+.wc3d-ar-modal__close:hover {
+	color: #0f172a !important;
+	background: transparent !important;
+	border: none !important;
+}
+
+.wc3d-ar-modal__qrcode {
+	margin: 16px auto !important;
+	width: 180px !important;
+	height: 180px !important;
+	min-height: 180px !important;
+	background: #fff !important;
+	padding: 10px !important;
+	border-radius: 8px !important;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+	display: block !important;
+	object-fit: contain !important;
+}
+
+/* Lazy Load Poster & Overlay styles */
+.wc3d-lazy-viewer {
+	cursor: pointer;
+	transition: background-image 0.25s ease-in-out;
+}
+
+.wc3d-poster-overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(15, 23, 42, 0.18);
+	transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+	z-index: 10;
+}
+
+.wc3d-load-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 14px 28px !important;
+	background: rgba(15, 23, 42, 0.75) !important;
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.18) !important;
+	border-radius: 30px !important;
+	color: #fff !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.03em !important;
+	cursor: pointer;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+	transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+	outline: none !important;
+	text-decoration: none !important;
+	line-height: 1 !important;
+}
+
+.wc3d-load-button:hover {
+	background: rgba(15, 23, 42, 0.9) !important;
+	border-color: rgba(255, 255, 255, 0.3) !important;
+	transform: translateY(-2px) scale(1.03);
+	box-shadow: 0 12px 40px rgba(99, 102, 241, 0.3), 0 8px 20px rgba(0, 0, 0, 0.45);
+	color: #fff !important;
+}
+
+.wc3d-load-button:active {
+	transform: translateY(0) scale(0.98);
+}
+
+.wc3d-load-button-icon {
+	font-size: 16px;
+	display: inline-block;
+	animation: wc3d-gentle-bounce 2s infinite ease-in-out;
+}
+
+@keyframes wc3d-gentle-bounce {
+
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(-3px);
+	}
+}
+
+/* Spinner inside loading button */
+.wc3d-loading-spinner {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 2px solid rgba(255, 255, 255, 0.25);
+	border-radius: 50%;
+	border-top-color: #fff;
+	animation: wc3d-spin 0.8s linear infinite;
+	margin: 0;
+}
+
+/* React poster overlay & transition fade */
+.wc3d-poster-overlay-wrapper {
+	position: absolute;
+	inset: 0;
+	z-index: 8;
+	opacity: 1;
+	transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+	pointer-events: none;
+}
+
+.wc3d-poster-overlay-wrapper.wc3d-fade-out {
+	opacity: 0;
+}
+
+.wc3d-react-poster-bg {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-color: #0e0e0e;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.wc3d-loading-overlay-content {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(15, 23, 42, 0.45);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+
+.wc3d-loading-spinner-wrapper {
+	position: relative;
+	width: 64px;
+	height: 64px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 12px;
+}
+
+.wc3d-loading-spinner-circle {
+	position: absolute;
+	inset: 0;
+	border: 3.5px solid rgba(255, 255, 255, 0.1);
+	border-top: 3.5px solid #6366f1;
+	border-radius: 50%;
+	animation: wc3d-spin 1s linear infinite;
+}
+
+.wc3d-loading-percentage {
+	font-size: 12px;
+	font-weight: 700;
+	color: #fff;
+	font-family: monospace;
+	z-index: 3;
+}
+
+.wc3d-loading-bar-track {
+	width: 140px;
+	height: 4px;
+	background: rgba(255, 255, 255, 0.15);
+	border-radius: 2px;
+	overflow: hidden;
+	margin-bottom: 8px;
+}
+
+.wc3d-loading-bar-fill {
+	height: 100%;
+	background: #6366f1;
+	transition: width 0.25s ease-out;
+}
+
+.wc3d-loading-text {
+	font-size: 12.5px;
+	font-weight: 600;
+	color: #cbd5e1;
+	letter-spacing: 0.02em;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Customize overlay button */
+.wc3d-overlay-btn.wc3d-customize-btn {
+	width: auto !important;
+	max-width: none !important;
+	padding: 0 12px !important;
+	gap: 6px;
+	display: inline-flex !important;
+}
+
+.wc3d-overlay-btn.wc3d-customize-btn.active {
+	background: #6366f1 !important;
+	color: #fff !important;
+}
+
+/* Customer sliding customizer drawer */
+@media (min-width: 601px) {
+
+	.wc3d-customer-drawer {
+		position: relative;
+		width: 0;
+		z-index: 100;
+		display: flex;
+		flex-direction: column;
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border-left: 0 solid transparent;
+		box-shadow: none;
+		transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s;
+		box-sizing: border-box;
+		overflow: hidden;
+		height: 100%;
+	}
+
+	.wc3d-customer-drawer.open {
+		width: 280px;
+		border-left: 1px solid rgba(226, 232, 240, 0.6);
+		box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+	}
+}
+
+@media (max-width: 600px) {
+
+	.wc3d-customer-drawer {
+		position: absolute;
+		right: -280px;
+		top: 0;
+		bottom: 0;
+		width: 280px;
+		max-width: 100%;
+		z-index: 100;
+		display: flex;
+		flex-direction: column;
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border-left: 1px solid rgba(226, 232, 240, 0.6);
+		box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+		transition: right 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+		box-sizing: border-box;
+	}
+
+	.wc3d-customer-drawer.open {
+		right: 0;
+	}
+}
+
+.wc3d-customer-drawer__header {
+	padding: 16px;
+	border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.wc3d-customer-drawer__title {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 700;
+	color: #1e293b;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-customer-drawer__close {
+	background: transparent !important;
+	border: none !important;
+	font-size: 20px !important;
+	font-weight: 700 !important;
+	color: #64748b !important;
+	cursor: pointer;
+	line-height: 1 !important;
+	padding: 4px !important;
+	margin: 0 !important;
+	box-shadow: none !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	outline: none !important;
+	text-decoration: none !important;
+}
+
+.wc3d-customer-drawer__close:hover {
+	color: #0f172a !important;
+	background: transparent !important;
+	border: none !important;
+}
+
+.wc3d-customer-drawer__content {
+	flex: 1;
+	overflow-y: auto;
+	padding: 16px;
+	box-sizing: border-box;
+}
+
+.wc3d-customer-drawer__section {
+	margin-bottom: 24px;
+}
+
+.wc3d-customer-drawer__section-title {
+	margin: 0 0 12px 0;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #475569;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-customer-drawer__item {
+	margin-bottom: 16px;
+}
+
+.wc3d-customer-drawer__item-label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 12px;
+	font-weight: 600;
+	color: #334155;
+	margin-bottom: 8px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-customer-drawer__toggle-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+}
+
+.wc3d-customer-drawer__reset-item-btn {
+	background: transparent !important;
+	border: none !important;
+	color: #94a3b8 !important;
+	cursor: pointer;
+	padding: 4px !important;
+	margin: 0 !important;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px !important;
+	transition: all 0.15s ease-in-out;
+	outline: none !important;
+	box-shadow: none !important;
+	flex-shrink: 0;
+	line-height: 1 !important;
+}
+
+.wc3d-customer-drawer__reset-item-btn:hover {
+	color: #ef4444 !important;
+	background: rgba(239, 68, 68, 0.08) !important;
+}
+
+.wc3d-customer-drawer__colors-grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+
+.wc3d-customer-drawer__color-bubble {
+	width: 20px !important;
+	height: 20px !important;
+	min-width: 20px !important;
+	max-width: 20px !important;
+	min-height: 20px !important;
+	max-height: 20px !important;
+	border-radius: 50% !important;
+	border: 1.5px solid rgba(0, 0, 0, 0.15) !important;
+	cursor: pointer;
+	transition: all 0.15s ease;
+	padding: 0 !important;
+	margin: 0 !important;
+	outline: none !important;
+	box-shadow: none !important;
+	display: inline-block !important;
+	flex-shrink: 0;
+}
+
+.wc3d-customer-drawer__color-bubble.active {
+	transform: scale(1.2);
+	box-shadow: 0 0 0 2px #6366f1 !important;
+	border-color: #fff !important;
+}
+
+.wc3d-customer-drawer__color-bubble:hover {
+	transform: scale(1.15);
+}
+
+.wc3d-customer-drawer__color-custom-wrapper {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	min-width: 20px;
+	max-width: 20px;
+	min-height: 20px;
+	max-height: 20px;
+	border-radius: 50%;
+	border: 1.5px solid rgba(0, 0, 0, 0.15);
+	cursor: pointer;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.wc3d-customer-drawer__color-picker-input {
+	position: absolute;
+	inset: -4px;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+	background: transparent;
+}
+
+.wc3d-customer-drawer__color-custom-icon {
+	font-size: 10px;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.wc3d-customer-drawer__toggle-label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 500;
+	color: #475569;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	transition: color 0.15s ease;
+}
+
+.wc3d-customer-drawer__toggle-label:hover {
+	color: #0f172a;
+}
+
+.wc3d-customer-drawer__toggle-label:hover .wc3d-customer-drawer__toggle-checkbox {
+	border-color: #6366f1 !important;
+}
+
+.wc3d-customer-drawer__toggle-checkbox {
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	width: 16px !important;
+	height: 16px !important;
+	border: 1.5px solid #cbd5e1 !important;
+	border-radius: 4px !important;
+	background: #fff !important;
+	cursor: pointer;
+	margin: 0 !important;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	position: relative !important;
+	transition: all 0.15s ease-in-out;
+	flex-shrink: 0;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+.wc3d-customer-drawer__toggle-checkbox:checked {
+	background-color: #6366f1 !important;
+	border-color: #6366f1 !important;
+}
+
+.wc3d-customer-drawer__toggle-checkbox:checked::after {
+	content: "" !important;
+	position: absolute !important;
+	left: 4.5px !important;
+	top: 1.5px !important;
+	width: 4px !important;
+	height: 8px !important;
+	border: solid #fff !important;
+	border-width: 0 2px 2px 0 !important;
+	transform: rotate(45deg) !important;
+}
+
+.wc3d-customer-drawer__toggle-text {
+	line-height: 1.2;
+}
+
+.wc3d-customer-drawer__footer {
+	padding: 16px;
+	border-top: 1px solid rgba(226, 232, 240, 0.6);
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.wc3d-customer-drawer__reset-btn {
+	width: 100%;
+	padding: 8px 16px !important;
+	border: 1px solid #cbd5e1 !important;
+	border-radius: 6px !important;
+	background: #fff !important;
+	color: #475569 !important;
+	font-size: 11.5px !important;
+	font-weight: 600 !important;
+	cursor: pointer;
+	transition: all 0.15s;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-customer-drawer__reset-btn:hover {
+	background: #f8fafc !important;
+	border-color: #94a3b8 !important;
+	color: #1e293b !important;
+}
+
+/* Planned (option-pricing): swatch price badges, toggle prices, options total */
+.wc3d-customer-drawer__colors-grid--priced {
+	align-items: flex-start;
+	gap: 10px 6px;
+}
+
+.wc3d-customer-drawer__swatch {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	width: 44px;
+}
+
+.wc3d-customer-drawer__price {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 9.5px;
+	font-weight: 600;
+	line-height: 1.15;
+	color: #4f46e5;
+	white-space: nowrap;
+	font-variant-numeric: tabular-nums;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-customer-drawer__price del {
+	color: #94a3b8;
+	font-weight: 500;
+}
+
+.wc3d-customer-drawer__toggle-label .wc3d-customer-drawer__price {
+	flex-direction: row;
+	gap: 4px;
+	font-size: 11px;
+}
+
+.wc3d-customer-drawer__options-total {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 10px;
+	font-size: 12.5px;
+	font-weight: 600;
+	color: #475569;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-customer-drawer__options-total strong {
+	font-weight: 700;
+	color: #0f172a;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Planned (option-groups): one section per group (swatches, thumbnails, pills, dropdown) */
+.wc3d-customer-drawer__group-title {
+	margin-bottom: 8px;
+	font-size: 12.5px;
+	text-transform: none;
+	letter-spacing: 0;
+	color: #1e293b;
+	overflow-wrap: anywhere;
+}
+
+.wc3d-customer-drawer__required {
+	color: #dc2626;
+}
+
+.wc3d-customer-drawer__group-value {
+	font-weight: 500;
+	color: #64748b;
+}
+
+.wc3d-customer-drawer__group-desc,
+.wc3d-customer-drawer__group-note {
+	margin: -2px 0 10px;
+	font-size: 11.5px;
+	line-height: 1.4;
+	color: #64748b;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wc3d-customer-drawer__group-note {
+	font-weight: 600;
+	color: #475569;
+}
+
+.wc3d-customer-drawer__group.is-inactive :is(.wc3d-customer-drawer__group-title, .wc3d-customer-drawer__group-desc, [role="radiogroup"], .wc3d-customer-drawer__select) {
+	opacity: 0.45;
+}
+
+.wc3d-customer-drawer__group [role="radio"]:disabled {
+	cursor: not-allowed;
+	transform: none;
+}
+
+.wc3d-customer-drawer__thumbs {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px;
+}
+
+.wc3d-customer-drawer__thumb {
+	display: flex !important;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	min-width: 0;
+	padding: 8px 4px 6px !important;
+	margin: 0 !important;
+	border: 1px solid #e2e8f0 !important;
+	border-radius: 8px !important;
+	background: #fff !important;
+	color: #334155 !important;
+	box-shadow: none !important;
+	cursor: pointer;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	line-height: 1.25 !important;
+	text-align: center;
+	text-transform: none !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.wc3d-customer-drawer__thumb:hover:not(:disabled) {
+	border-color: #a5b4fc !important;
+}
+
+.wc3d-customer-drawer__thumb.active {
+	border-color: #6366f1 !important;
+	box-shadow: 0 0 0 1px #6366f1 !important;
+}
+
+.wc3d-customer-drawer__thumb-img {
+	display: block;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.wc3d-customer-drawer__thumb-label {
+	max-width: 100%;
+	overflow-wrap: anywhere;
+}
+
+.wc3d-customer-drawer__pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.wc3d-customer-drawer__pill {
+	display: inline-flex !important;
+	align-items: center;
+	gap: 6px;
+	max-width: 100%;
+	padding: 6px 11px !important;
+	margin: 0 !important;
+	border: 1px solid #cbd5e1 !important;
+	border-radius: 999px !important;
+	background: #fff !important;
+	color: #334155 !important;
+	box-shadow: none !important;
+	cursor: pointer;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	line-height: 1.2 !important;
+	text-align: left;
+	text-transform: none !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.wc3d-customer-drawer__pill:hover:not(:disabled) {
+	border-color: #a5b4fc !important;
+}
+
+.wc3d-customer-drawer__pill.active {
+	border-color: #6366f1 !important;
+	background: #eef2ff !important;
+	color: #3730a3 !important;
+}
+
+.wc3d-customer-drawer__pill-dot {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	flex-shrink: 0;
+}
+
+.wc3d-customer-drawer__pill .wc3d-customer-drawer__price {
+	flex-direction: row;
+	gap: 3px;
+	font-size: 10.5px;
+}
+
+.wc3d-customer-drawer__select {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	min-height: 34px;
+	padding: 6px 8px;
+	margin: 0;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	background: #fff;
+	color: #1e293b;
+	font-size: 12.5px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	box-sizing: border-box;
+}
+
+:is(.wc3d-customer-drawer__thumb, .wc3d-customer-drawer__pill, .wc3d-customer-drawer__select):focus-visible {
+	outline: 2px solid #6366f1 !important;
+	outline-offset: 2px !important;
+}
+
+/* 3D Model Gallery styles */
+.wc3d-gallery-row {
+	position: absolute;
+	bottom: 12px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	gap: 10px;
+	z-index: 2;
+	pointer-events: auto;
+}
+
+.wc3d-gallery-thumb {
+	width: 56px !important;
+	height: 56px !important;
+	border-radius: 6px !important;
+	border: 1.5px solid rgba(0, 0, 0, 0.15) !important;
+	background: rgba(255, 255, 255, 0.2) !important;
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	padding: 2px !important;
+	cursor: pointer;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+	transition: all 0.15s ease-in-out;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.wc3d-gallery-thumb:hover {
+	border-color: rgba(0, 0, 0, 0.3) !important;
+	background: rgba(255, 255, 255, 0.3) !important;
+	transform: scale(1.05);
+}
+
+.wc3d-gallery-thumb.active {
+	border-color: #6366f1 !important;
+	background: rgba(255, 255, 255, 0.4) !important;
+	box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.wc3d-gallery-thumb img {
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: contain !important;
+	border-radius: 4px !important;
+	display: block !important;
+}
+
+/* Gallery thumb skeleton/placeholder */
+.wc3d-gallery-thumb-placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #64748b;
+	font-size: 10px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+/* Overlay layout by canvas width: the gallery strip never meets the
+   controls stack or the fullscreen button. */
+@container wc3d-stage (min-width: 260px) and (max-width: 599px) {
+
+	/* Labelled AR/Customize rows end the stack: lift the strip above. */
+	.wc3d-canvas-container:has(.wc3d-customize-btn, .wc3d-ar-btn) > .wc3d-gallery-row {
+		bottom: 50px;
+	}
+
+	.wc3d-canvas-container:has(.wc3d-customize-btn):has(.wc3d-ar-btn) > .wc3d-gallery-row {
+		bottom: 88px;
+	}
+}
+
+/* Shrink the four thumbs to fit between the 52px stack and fullscreen lanes. */
+@container wc3d-stage (min-width: 260px) and (max-width: 357px) {
+
+	.wc3d-gallery-row {
+		gap: 6px;
+	}
+
+	.wc3d-gallery-row .wc3d-gallery-thumb {
+		width: clamp(32px, (100cqi - 122px) / 4, 56px) !important;
+		height: clamp(32px, (100cqi - 122px) / 4, 56px) !important;
+	}
+}
+
+@container wc3d-stage (max-width: 299px) {
+
+	.wc3d-controls-stack {
+		gap: 4px;
+	}
+}
+
+/* Too narrow for a row (e.g. drawer open): thumbs stack above the
+   fullscreen button. */
+@container wc3d-stage (max-width: 259px) {
+
+	.wc3d-canvas-container > .wc3d-gallery-row {
+		left: auto;
+		right: 10px;
+		bottom: 52px;
+		flex-direction: column;
+		gap: 6px;
+		transform: none;
+	}
+
+	.wc3d-gallery-row .wc3d-gallery-thumb {
+		width: 36px !important;
+		height: 36px !important;
+	}
+}
+
+/* Labels give way to icons; hidden text keeps the accessible name. */
+@container wc3d-stage (max-width: 179px) {
+
+	.wc3d-overlay-btn.wc3d-customize-btn,
+	.wc3d-overlay-btn.wc3d-ar-btn {
+		width: 32px !important;
+		padding: 0 !important;
+		gap: 0;
+	}
+
+	.wc3d-overlay-btn.wc3d-customize-btn > span,
+	.wc3d-overlay-btn.wc3d-ar-btn > span {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+}
+
+/* No room beside an open drawer: drop the strip, then the fullscreen
+   button (inline-styled, hence !important). */
+@container wc3d-stage (max-width: 119px) {
+
+	.wc3d-canvas-container > .wc3d-gallery-row {
+		display: none;
+	}
+}
+
+@container wc3d-stage (max-width: 99px) {
+
+	.wc3d-canvas-container > .wc3d-overlay-btn {
+		display: none !important;
+	}
+}
+
+/* Hide WC's gallery zoom trigger when the active slide is a 3D model */
+.woocommerce-product-gallery:has(.flex-active-slide .wc3d-viewer-root) .woocommerce-product-gallery__trigger,
+.woocommerce-product-gallery:has(.flex-active-slide.wc3d-replace-image) .woocommerce-product-gallery__trigger {
+	display: none !important;
+}
+
+/* Also when the viewer is inline or replaces the main image (block themes,
+   custom templates) */
+.woocommerce-product-gallery:has(.wc3d-viewer-replace) .woocommerce-product-gallery__trigger,
+.woocommerce-product-gallery:has(.wc3d-viewer-inline) .woocommerce-product-gallery__trigger {
+	display: none !important;
+}
+
+/* Keyboard focus ring. The listing selector lifts :is() above every
+   outline:none above, which stays to hide themes' mouse-focus rings. */
+:is(.woocommerce ul.products li.product .wc3d-listing-trigger, .wc3d-overlay-btn, .wc3d-gallery-thumb, .wc3d-load-button, .wc3d-listing-trigger, .wc3d-modal-trigger, .wc3d-modal__close, .wc3d-ar-modal__close, .wc3d-hotspot-action-btn, .wc3d-hotspot-secondary-btn, .wc3d-hotspot-delete-btn, .wc3d-customer-drawer__close, .wc3d-customer-drawer__reset-btn, .wc3d-customer-drawer__reset-item-btn, .wc3d-customer-drawer__color-bubble, .wc3d-customer-drawer__toggle-checkbox):focus-visible {
+	outline: 2px solid #6366f1 !important;
+	outline-offset: 2px !important;
+}
+
+/* Reduced motion: no transitions or decorative animation; loading
+   spinners keep turning. */
+@media (prefers-reduced-motion: reduce) {
+
+	:is(.wc3d-viewer-root, .wc3d-modal, .wc3d-ar-modal, .wc3d-listing-icon, .wc3d-listing-trigger, .wc3d-modal-trigger),
+	:is(.wc3d-viewer-root, .wc3d-modal, .wc3d-ar-modal, .wc3d-listing-trigger, .wc3d-modal-trigger) * {
+		transition: none !important;
+	}
+
+	.wc3d-hotspot-ping,
+	.wc3d-load-button-icon {
+		animation: none !important;
+	}
+}
+
+/* ── Prototype only ───────────────────────────────────────────────
+   drei <Html center> stand-in: each hotspot sits on a 0×0 anchor the
+   engine moves to the projected point. */
+.wc3d-hotspot-layer {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.wc3d-hotspot-anchor {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0;
+	height: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	will-change: transform;
+}
+
+.wc3d-viewer3d.wc3d-canvas-container {
+	overflow: visible !important;
+}
+
+/* "Download 3D Model" stand-in: shows a still in place of the file download. */
+.proto-shot__panel {
+	width: min(560px, 92vw);
+	max-width: 92vw;
+	min-height: 0;
+}
+
+.proto-shot__panel h4 {
+	margin: 0 0 12px;
+	font: 700 15px/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.proto-shot__img {
+	display: block;
+	width: 100%;
+	max-height: 60vh;
+	object-fit: contain;
+	background: #0e0e0e;
+	border-radius: 8px;
+}
+
+.proto-shot__note {
+	margin: 12px 0 0;
+	font: 12.5px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	color: #475569;
+}
+
+.proto-shot__note code {
+	font-size: 12px;
+	background: rgba(15, 23, 42, 0.06);
+	padding: 1px 4px;
+	border-radius: 4px;
+}
+
+.wc3d-ar-modal__panel h4 {
+	margin: 4px 0 8px;
+	font: 700 16px/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	color: #0f172a;
+}
+
+.wc3d-ar-modal__panel p {
+	margin: 0;
+	font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	color: #334155;
+}
